@@ -13,9 +13,8 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
 
       <div className="app-shell__workspace">
         <header className="app-shell__header">{header}</header>
+        <main className="app-shell__content">{children}</main>
       </div>
-
-      <main className="app-shell__content">{children}</main>
     </div>
   );
 }

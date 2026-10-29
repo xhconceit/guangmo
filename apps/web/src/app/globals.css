@@ -103,7 +103,7 @@ button:disabled {
 
 .app-shell__header {
   display: flex;
-  align-item: center;
+  align-items: center;
   justify-content: space-between;
   min-height: 64px;
   padding: 0 32px;
