@@ -1,0 +1,67 @@
+:root {
+  color-schema: light;
+
+  /* 颜色：按用途命名，组件不直接依赖具体色值 */
+  --surface: #fffefa;
+  --outer: #ebe9e5;
+  --sidebar: #f3f1ed;
+  --input: #f4f2ee;
+  --panel: #f5f2ed;
+
+  --selected: #e4e2dd;
+  --hover: #ebe9e5;
+
+  --text: #27292b;
+  --secondary: #77746e;
+  --muted: #96928b;
+
+  --line: #e5e2dc;
+  --strong: #27292b;
+  --on-strong: #ffffff;
+  --focus: #aaa69d;
+
+  --popup-shadow: 0 8px 28px #302b2114;
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI",
+   "PingFang SC", "Microsoft YaHei", sans-serif;
+
+
+   /* 间距尺度 */
+   --space-1: 4px;
+   --space-2: 8px;
+   --space-3: 12px;
+   --space-4: 16px;
+   --space-5: 24px;
+   --space-6: 32px;
+   --space-7: 48px;
+   --space-8: 64px;
+
+   /* 圆角 */
+   --radius-sm: 12px;
+   --radius-md: 16px;
+   --radius-lg: 24px;
+   --radius-round: 99999px;
+   --radius-nav: 10px;
+
+
+   /* 布局：6px 是面板外距的独立值 */
+   --frame-gap: 6px;
+   --page-inset: 32px;
+   --header-height: 64px;
+
+   --rail-width: 56px;
+   --sidebar-width: 184px;
+
+   --conversation-width: 736px;
+   --content-width: 880px;
+}
+
+/* 只替换颜色；间距与尺寸在两种主题下保持一致 */
+:root.theme-dark {
+  color-schema: dark;
+
+  --surface: #24252a;
+  --outer: #17181b;
+  --sidebar: #2021
+}

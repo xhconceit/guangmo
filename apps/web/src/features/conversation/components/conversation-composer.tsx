@@ -2,14 +2,14 @@
 
 import { ArrowUp } from "lucide-react";
 import {
-  FormEvent,
-  KeyboardEvent,
-  useState
+  useState,
+  useRef
 } from "react"
+import type { FormEvent, KeyboardEvent } from "react"
 
 interface ConversationComposerProps {
   isSending?: boolean;
-  onSend: (content: string) => void | Promise<void>
+  onSend: (content: string) => Promise<boolean>
 }
 
 export function ConversationComposer({
@@ -17,30 +17,35 @@ export function ConversationComposer({
   onSend,
 }: ConversationComposerProps) {
   const [content, setContent] = useState("");
-  const [isComposing, setIsComposing] = useState(false);
-
-  const submitMessage = async () => {
-    const trimmedContent = content.trim()
-
-    if (!trimmedContent || isSending) {
-      return;
-    }
-
-    await onSend(trimmedContent);
-    setContent("")
-  }
+  const composingRef = useRef(false)
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
-    await submitMessage()
+
+    const trimmedContent = content.trim()
+
+    if (
+      !trimmedContent ||
+      isSending ||
+      composingRef.current
+    ) {
+      return;
+    }
+
+    const succeeded = await onSend(trimmedContent)
+
+    if (succeeded) {
+      setContent("")
+    }
+
   }
 
   const handleKeyDown = (
     event: KeyboardEvent<HTMLTextAreaElement>
   ) => {
-    const isConfirmingComposition = isComposing || event.nativeEvent.isComposing
+    const isConfirmingComposition = composingRef.current || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229
 
     if (
       event.key === "Enter" &&
@@ -50,8 +55,6 @@ export function ConversationComposer({
       event.preventDefault();
       event.currentTarget.form?.requestSubmit();
     }
-
-
   }
 
   return (
@@ -64,8 +67,12 @@ export function ConversationComposer({
         className="min-h-11 flex-1 resize-none bg-transparent px-2 py-2 text-sm outline-none placeholder:text-zinc-400"
         disabled={isSending}
         onChange={(event) => setContent(event.target.value)}
-        onCompositionEnd={() => setIsComposing(false)}
-        onCompositionStart={() => setIsComposing(true)}
+        onCompositionStart={() => {
+          composingRef.current = true
+        }}
+        onCompositionEnd={() =>  {
+          composingRef.current = false
+        }}
         onKeyDown={handleKeyDown}
         placeholder="输入你想讨论的内容…"
         rows={1}
