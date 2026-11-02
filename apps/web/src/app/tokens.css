@@ -1,21 +1,26 @@
 :root {
-  color-schema: light;
+  /* 浏览器按浅色绘制原生控件和滚动条。 */
+  color-scheme: light;
 
   /* 颜色：按用途命名，组件不直接依赖具体色值 */
+  /* surface 是主内容区底色，outer 是面板之间露出的页面底色。 */
   --surface: #fffefa;
   --outer: #ebe9e5;
   --sidebar: #f3f1ed;
   --input: #f4f2ee;
   --panel: #f5f2ed;
 
+  /* selected 标记当前项，hover 用于指针悬停。 */
   --selected: #e4e2dd;
   --hover: #ebe9e5;
 
+  /* 正文、辅助说明、弱提示依次降低文字强调程度。 */
   --text: #27292b;
   --secondary: #77746e;
   --muted: #96928b;
 
   --line: #e5e2dc;
+  /* 主按钮用 strong 作底色，用 on-strong 显示其上的文字或图标。 */
   --strong: #27292b;
   --on-strong: #ffffff;
   --focus: #aaa69d;
@@ -57,11 +62,30 @@
    --content-width: 880px;
 }
 
-/* 只替换颜色；间距与尺寸在两种主题下保持一致 */
+/* 给 <html> 加上 theme-dark 类时，这组值会覆盖上面的同名变量。
+   例如，使用 var(--surface) 的内容区会从暖白变为石墨灰。 */
 :root.theme-dark {
-  color-schema: dark;
+  color-scheme: dark;
 
+  /* 主内容区、外围、侧栏、输入框和次级面板各有自己的底色。 */
   --surface: #24252a;
   --outer: #17181b;
-  --sidebar: #2021
+  --sidebar: #202125;
+  --input: #2d2e33;
+  --panel: #2b2c31;
+
+  --selected: #393a40;
+  --hover: #34353b;
+
+  --text: #e8e7e3;
+  --secondary: #b0afb4;
+  --muted: #99989f;
+
+  --line: #3a3b41;
+  /* 暗色主题下，主按钮改用浅底深字。 */
+  --strong: #e8e7e3;
+  --on-strong: #202125;
+  --focus: #8c8b93;
+
+  --popup-shadow: 0 8px 28px #0005;
 }

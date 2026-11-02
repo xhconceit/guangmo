@@ -141,3 +141,13 @@
 ## 原型收尾基准
 
 当前以页面实际实现为准：暖白亮色与石墨暗色共用语义颜色变量，不再叠加历史彩色方案。Logo 为墨黑，暗色反显；所有交互使用中性黑白灰。顶部提供主题切换并保存选择。侧栏不放新建对话或对话历史。实现边界和待验收项见 `prototype/README.md`。
+
+## Web 颜色使用与验收（现行）
+
+广莫 Web 使用暖白与石墨两套中性色。前文的翡翠绿是历史方案。当前亮暗色值维护在 [主题变量](../apps/web/src/app/tokens.css)，组件样式按用途引用变量，例如侧栏使用 `var(--sidebar)`。
+
+- **文字**　在实际背景上检查对比度，普通文字至少 4.5:1，大号文字至少 3:1。辅助说明、时间和输入框占位文字也按实际字号检查。[WCAG 文字对比度](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- **图标与焦点**　识别可用控件或其状态所必需的图标、边界或自定义焦点指示，与相邻颜色至少达到 3:1。纯装饰分隔线可以更淡。[WCAG 非文字对比度](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)
+- **状态**　选中、悬停和键盘焦点分别使用 `--selected`、`--hover` 和 `--focus`。错误提示应写出原因，让用户在无法分辨颜色时也能理解发生了什么。[WCAG 颜色的使用](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- **验收**　在亮色和暗色下分别检查正文、辅助文字和控件。打开一个页面，把指针移到另一导航项，再按 Tab，确认当前页和键盘焦点均可辨认。若使用半透明浮层，在浅色和深色内容上分别检查浮层文字。[Apple 颜色指南](https://developer.apple.com/design/human-interface-guidelines/color)
+- **暗色浮层** 菜单等浮层叠在主内容区上时，优先使用比主背景略亮的面板色。验收时，把浮层放在实际页面上，检查能否看清它的边界，并判断哪些操作属于它。

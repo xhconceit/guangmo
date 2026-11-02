@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>广莫 · 色阶与主题</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:var(--outer);color:var(--text);font:16px/1.65 system-ui,sans-serif}main{max-width:880px;margin:auto;padding:48px 20px}header,section{padding:clamp(20px,4vw,40px);background:var(--surface);border-radius:18px;margin-bottom:12px}h1{font-size:clamp(32px,6vw,54px);line-height:1.1;margin:.25em 0}h2{font-size:23px;margin:0}p{max-width:64ch}small{letter-spacing:.1em}button{background:var(--strong);color:var(--on-strong);padding:10px 18px;border:0;border-radius:20px;cursor:pointer;font:inherit}button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.strip{display:flex;height:62px;border-radius:10px;overflow:hidden}.strip span{flex:1}.row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:9px 0}.chip{height:26px;border:1px solid var(--line);border-radius:6px}code{font-size:.9em}.demo{background:var(--outer);padding:12px;border-radius:12px;display:flex;gap:8px}.nav,.pane{padding:16px;border-radius:8px}.nav{background:var(--sidebar)}.pane{background:var(--surface);flex:1}.nav b{display:block;padding:3px 8px;background:var(--selected);border-radius:6px}.nav b:hover{background:var(--hover)}
+</style><main><header><small>广莫 / DESIGN NOTES</small><h1>从色阶到主题</h1><p>同一组灰色，怎样让人看出哪里是内容、哪里能点击？先看明暗，再给颜色分工。</p><button id="toggle">切换到暗色</button></header>
+<section><h2>01　看明暗顺序</h2><p>下面从当前主题挑出七个代表色，按相对亮度从浅到深排列。常见的 neutral-50、neutral-100 等编号表示色板中的档位。广莫目前按用途直接定义颜色，各档之间的明暗差距也不相等。</p><div class="strip" id="strip" aria-hidden="true"></div><div id="rows"></div></section>
+<section><h2>02　看同一个颜色如何分工</h2><p>浅色下，页面外围和悬停都用 #EBE9E5。切到暗色，外围变成 #17181B，悬停变成 #34353B。把指针移到「对话」上，再移开，观察选中和悬停的区别。</p><div class="demo"><div class="nav"><b>对话</b></div><div class="pane"><strong>主内容区</strong><br><code>background: var(--surface)</code></div></div></section>
+<section><h2>03　写组件时选哪一层？</h2><p>基础色阶提供可选的颜色，语义变量描述它的用途。在广莫，侧栏读取 <code>var(--sidebar)</code>。切换主题时，只需改变这个变量对应的色值，侧栏就会跟着页面变色。</p></section></main>
+<script>
+const palettes=[{"surface": "#fffefa", "outer": "#ebe9e5", "sidebar": "#f3f1ed", "input": "#f4f2ee", "panel": "#f5f2ed", "selected": "#e4e2dd", "hover": "#ebe9e5", "text": "#27292b", "secondary": "#77746e", "muted": "#96928b", "line": "#e5e2dc", "strong": "#27292b", "on-strong": "#ffffff", "focus": "#aaa69d"}, {"surface": "#24252a", "outer": "#17181b", "sidebar": "#202125", "input": "#2d2e33", "panel": "#2b2c31", "selected": "#393a40", "hover": "#34353b", "text": "#e8e7e3", "secondary": "#b0afb4", "muted": "#99989f", "line": "#3a3b41", "strong": "#e8e7e3", "on-strong": "#202125", "focus": "#8c8b93"}];
+const roles={surface:'主内容区',sidebar:'侧栏',outer:'外围',selected:'选中背景',muted:'弱提示',secondary:'辅助文字',text:'正文'};
+function luminance(hex){const rgb=hex.slice(1).match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4);return rgb[0]*0.2126+rgb[1]*0.7152+rgb[2]*0.0722}
+let dark=false;
+function render(){
+ const palette=palettes[Number(dark)];
+ for(const [name,value] of Object.entries(palette))document.documentElement.style.setProperty('--'+name,value);
+ document.documentElement.style.colorScheme=dark?'dark':'light';
+ const keys=Object.keys(roles).sort((a,b)=>luminance(palette[b])-luminance(palette[a]));
+ document.querySelector('#strip').innerHTML=keys.map(k=>'<span style="background:'+palette[k]+'"></span>').join('');
+ document.querySelector('#rows').innerHTML=keys.map(k=>'<div class="row"><i class="chip" style="background:'+palette[k]+'"></i><span>'+roles[k]+' <code>--'+k+'</code></span><code>'+palette[k].toUpperCase()+'</code></div>').join('');
+ document.querySelector('#toggle').textContent=dark?'切换到亮色':'切换到暗色';
+}
+document.querySelector('#toggle').onclick=()=>{dark=!dark;render()};render();
+</script></html>
