@@ -151,3 +151,4 @@
 - **状态**　选中、悬停和键盘焦点分别使用 `--selected`、`--hover` 和 `--focus`。错误提示应写出原因，让用户在无法分辨颜色时也能理解发生了什么。[WCAG 颜色的使用](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
 - **验收**　在亮色和暗色下分别检查正文、辅助文字和控件。打开一个页面，把指针移到另一导航项，再按 Tab，确认当前页和键盘焦点均可辨认。若使用半透明浮层，在浅色和深色内容上分别检查浮层文字。[Apple 颜色指南](https://developer.apple.com/design/human-interface-guidelines/color)
 - **暗色浮层** 菜单等浮层叠在主内容区上时，优先使用比主背景略亮的面板色。验收时，把浮层放在实际页面上，检查能否看清它的边界，并判断哪些操作属于它。
+

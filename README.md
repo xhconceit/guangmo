@@ -9,6 +9,7 @@
 目前已初始化 Web 应用骨架，正在推进 MVP。核心能力包括对话、项目与记忆管理、学习安排和每周回看。
 
 - [MVP 产品说明](docs/MVP-产品说明.md)
+- [待评估功能 · AI 文档学习助手 PRD](docs/待评估功能-AI文档学习助手PRD.md)
 - [技术方案](docs/技术方案.md)
 - [HTML 交互原型](prototype/index.html)
 - [正式 Logo（SVG）](design/guangmo-logo-river.svg)
