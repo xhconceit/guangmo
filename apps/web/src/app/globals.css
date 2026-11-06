@@ -1,11 +1,13 @@
+@import "./tokens.css";
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: #f8f8fa;
-  color: #202127;
+  background: var(--outer);
+  color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
 }
 
@@ -25,19 +27,21 @@ textarea {
   width: 100%;
   margin-top: 24px;
   padding: 16px;
-  border: 0;
+  border: 1px solid var(--input-line);
   border-radius: 12px;
+  background: var(--input);
+  color: var(--text);
   font: inherit;
   resize: vertical;
 }
 
 textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #d9d9df;
+  box-shadow: 0 0 0 2px var(--focus);
 }
 
 button:focus-visible {
-  outline: 2px solid #999da8;
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -46,8 +50,8 @@ button {
   padding: 10px 16px;
   border: 0;
   border-radius: 8px;
-  background: #27292b;
-  color: white;
+  background: var(--strong);
+  color: var(--on-strong);
   font: inherit;
   cursor: pointer;
 }
@@ -72,33 +76,33 @@ button:disabled {
 
 .prompts button {
   margin-top: 0;
-  background: white;
+  background: var(--surface);
   border: 0;
-  color: #555;
+  color: var(--secondary);
   font-size: 14px;
 }
 
 .app-shell {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
-  gap: 6px;
+  gap: 10px;
   min-height: 100dvh;
-  padding: 6px;
-  background: #ebe9e5;
+  padding: 10px;
+  background: var(--outer);
 }
 
 .app-shell__sidebar {
   padding: 12px 6px;
-  border-radius: 16px;
-  background: #f3f1ed;
+  border-radius: 20px;
+  background: var(--sidebar);
 }
 
 .app-shell__workspace {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  border-radius: 16px;
-  background: #fffefa;
+  border-radius: 20px;
+  background: var(--surface);
 }
 
 .app-shell__header {
@@ -120,8 +124,8 @@ main.app-shell__content {
 
 @media (max-width: 640px) {
   .app-shell {
-    gap: 4px;
-    padding: 4px;
+    gap: 6px;
+    padding: 6px;
   }
   .app-shell__header {
     min-height: 56px;
@@ -143,20 +147,20 @@ main.app-shell__content {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  color: #77746e;
+  color: var(--secondary);
   text-decoration: none;
 }
 
 .app-sidebar__link:hover {
-  background: #ebe9e5;
+  background: var(--hover);
 }
 
 .app-sidebar__link[aria-current="page"] {
-  background: #e4e2dd;
-  color: #27292b;
+  background: var(--selected);
+  color: var(--text);
 }
 
 .app-sidebar__link:focus-visible {
-  outline: 2px solid #77746e;
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
