@@ -1,6 +1,9 @@
 "use client";
 
 import { SquarePen } from "lucide-react";
+import { PlusCircleIcon } from "@phosphor-icons/react";
+import { IconButton } from "@/components/ui/IconButton"
+import { Button } from "@/components/ui/Button"
 
 interface ConversationHeaderProps {
   disabled?: boolean;
@@ -18,15 +21,19 @@ export function ConversationHeader({
     <header className="flex items-center justify-between gap-3">
       <h2 className="text-sm font-medium">对话</h2>
 
-      <button
-        className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-3 py-2 text-sm transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-800 dark:hover:bg-zinc-800"
-        disabled={disabled}
+      <Button
+        title="新建对话"
+        disabled={disabled || isCreating}
         onClick={onNewConversation}
-        type="button"
       >
-        <SquarePen aria-hidden="true" size={16} />
-        {isCreating ? "正在创建..." : "新建对话"}
-      </button>
+        <PlusCircleIcon
+          size={18}
+          weight="regular"
+          aria-hidden="true"
+        />
+
+        {isCreating ? "正在创建…" : "新建对话"}
+      </Button>
     </header>
   )
 }

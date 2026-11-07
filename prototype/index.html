@@ -6,7 +6,7 @@
 <title>广莫 / Guangmo · 个人 Agent</title>
 <link rel="icon" type="image/svg+xml" href="../design/guangmo-logo-river.svg">
 <style>
-:root{color-scheme:light;--text:#29292e;--secondary:#72727b;--muted:#95959e;--sidebar:var(--surface);--hover:#eaeaec;--line:#e8e8ec;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--frame-gap:6px;--page-inset:20px;--header-height:52px;--rail-width:52px;--corner-shape:squircle;--radius-sm:12px;--radius-md:16px;--radius-lg:24px;--radius-panel:20px;--radius:var(--radius-md)}
+:root{color-scheme:light;--text:#29292e;--secondary:#72727b;--muted:#95959e;--sidebar:var(--surface);--hover:#eaeaec;--line:#e8e8ec;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--frame-gap:6px;--page-inset:20px;--header-height:52px;--rail-width:52px;--corner-shape:squircle;--radius-sm:12px;--radius-md:16px;--radius-lg:24px;--radius-panel:20px;--radius-button:20px;--radius:var(--radius-md)}
 /* Smooth rectangular corners; border-radius remains the compatibility fallback. */
 @supports (corner-shape: squircle){
   *,*::before,*::after{corner-shape:var(--corner-shape)}
@@ -43,7 +43,7 @@ main{position:relative}.topbar{height:var(--header-height)}.breadcrumb b{font-si
 .workspace-sidebar nav a[data-page="projects"] .ph-icon{--nav-icon-scale:1.18}
 .workspace-sidebar nav a[data-page="memory"] .ph-icon-regular{--nav-icon-scale:.9}
 .workspace-sidebar nav a[data-page="memory"] .ph-icon-fill{--nav-icon-scale:.95}
-.workspace-sidebar nav a:hover .ph-icon{transform:translateY(-1px) scale(var(--nav-icon-scale))}
+.workspace-sidebar nav a:hover .ph-icon{transform:scale(var(--nav-icon-scale))}
 .workspace-sidebar nav a.active .ph-icon{transform:scale(var(--nav-icon-scale))}
 .sidebar-compact .workspace-sidebar nav a:before{transition:background .16s,box-shadow .16s}
 .sidebar-compact .workspace-sidebar nav a.active:before{background:#e0e3ec;box-shadow:inset 0 0 0 1px #d6dae650}
@@ -59,6 +59,13 @@ body{background:var(--outer);color:var(--text)}main{background:var(--surface)}.w
 .welcome h1,.greeting h1,.secondary-panel h2{color:var(--text)}.welcome p,.eyebrow,.footer,.message-author{color:var(--muted)}.new-composer{background:var(--input);border:1px solid var(--input-line);box-shadow:none}.new-composer:focus-within{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}.new-composer textarea{color:var(--text)}.new-composer textarea::placeholder{color:var(--muted)}.send,.primary{background:var(--strong);color:var(--on-strong)}.send:not(:disabled):hover,.primary:hover{background:var(--strong);opacity:.85}.send:disabled{background:var(--selected);color:var(--muted)}.prompt-options button{color:var(--secondary)}.prompt-options button:hover{background:var(--hover);color:var(--text)}.chat-message.user{background:var(--input);color:var(--text)}.chat-message.assistant{color:var(--text)}.secondary-panel{background:var(--panel)}.subtitle,.secondary-panel p,dialog p{color:var(--secondary)}.quiet:hover{color:var(--text)}#context-menu,dialog{background:var(--surface);color:var(--text);box-shadow:var(--popup-shadow)}.history-close,#context-menu label{color:var(--secondary)}.conversation-history button:hover,#context-menu label:hover{background:var(--hover)}.toast{background:var(--strong);color:var(--on-strong)}.skip-link{background:var(--surface);color:var(--text)}input[type=checkbox]{accent-color:var(--strong)}button:focus-visible,a:focus-visible,input:focus-visible{outline-color:var(--focus)}.has-messages .chat-result{scrollbar-color:var(--selected) transparent}.theme-dark #chat-error{color:#f1a4ab}#theme-toggle svg{width:18px;height:18px}
 @media(max-width:640px){.page-actions{gap:0}.history-toggle{font-size:0;width:34px;height:34px;padding:8px}.history-toggle svg{width:18px;height:18px}}
 @media(pointer:coarse){.history-items button,.history-new-chat{min-height:44px}}
+</style>
+<style>
+/* Icon buttons use a visible rounded-square touch target, matching the prototype reference. */
+.icon-button,.attach-button,.context-button,.primary,.history-toggle,.new-conversation,.history-new-chat,.history-items button{border-radius:var(--radius-button)}
+.sidebar-compact .workspace-sidebar nav a:before{border-radius:var(--radius-button)}
+.history-header .history-close{display:grid;place-items:center;padding:0;line-height:1}
+.history-header .history-close svg{width:18px;height:18px;transform:translate(-.5px,-.5px)}
 </style>
 </head>
 <body>
@@ -115,4 +122,8 @@ $('#new-chat').onclick=requestNewChat;$('#history-new-chat').onclick=requestNewC
 function resetChat(){page('today');if(window.matchMedia('(max-width:900px)').matches)closeHistory();history.replaceState(null,'','#today');$('#chat-result').replaceChildren();$('#chat-result').hidden=true;$('.chat-home').classList.remove('has-messages');input.value='';$('#file-input').value='';$('#attachment-label').textContent='';$('#attachment-label').title='';$('#chat-error').hidden=true;input.removeAttribute('aria-invalid');closeContext();syncInput();input.focus()}
 const themeToggle=$('#theme-toggle');function setTheme(dark){document.documentElement.classList.toggle('theme-dark',dark);themeToggle.setAttribute('aria-label',dark?'切换亮色主题':'切换暗色主题');themeToggle.title=dark?'切换亮色主题':'切换暗色主题';themeToggle.setAttribute('aria-pressed',String(dark));document.querySelector('meta[name="theme-color"]').content=dark?'#24252a':'#ffffff';try{localStorage.setItem('guangmo-theme',dark?'dark':'light')}catch{}}
 let savedTheme='light';try{savedTheme=localStorage.getItem('guangmo-theme')||'light'}catch{}setTheme(savedTheme==='dark');themeToggle.onclick=()=>setTheme(!document.documentElement.classList.contains('theme-dark'));
-</script></body></html>
+</script>
+<script>
+document.getElementById('history-close').innerHTML='<svg aria-hidden="true" class="ph-icon ph-icon-regular" data-phosphor-icon="x" viewBox="0 0 256 256" fill="currentColor"><path d="M208.49,191.51a12,12,0,0,1-17,17L128,145l-63.51,63.51a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.51a12,12,0,0,1,17,17L145,128Z"/></svg>';
+</script>
+</body></html>

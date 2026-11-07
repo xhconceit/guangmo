@@ -1,4 +1,25 @@
+@import "tailwindcss";
 @import "./tokens.css";
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-sidebar: var(--sidebar);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+
+  --color-foreground: var(--text);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-focus: var(--focus);
+
+  --radius-button:  var(--radius-button);
+
+  --color-strong: var(--color-strong);
+  --color-on-strong: var(--color-on-strong);
+}
+
+@layer base {
+
 
 /* Rounded surfaces and pseudo-elements share smooth corners.
    Unsupported browsers keep their existing border-radius rendering. */
@@ -63,7 +84,7 @@ button {
   margin-top: 12px;
   padding: 10px 16px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--strong);
   color: var(--on-strong);
   font: inherit;
@@ -160,7 +181,7 @@ main.app-shell__content {
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: var(--radius-nav);
   color: var(--secondary);
   text-decoration: none;
 }
@@ -177,4 +198,6 @@ main.app-shell__content {
 .app-sidebar__link:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+}
+
 }
