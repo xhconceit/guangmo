@@ -29,39 +29,40 @@
   --popup-shadow: 0 8px 28px #00000012;
 
   /* 字体 */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI",
-   "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
 
+  /* 间距尺度 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
 
-   /* 间距尺度 */
-   --space-1: 4px;
-   --space-2: 8px;
-   --space-3: 12px;
-   --space-4: 16px;
-   --space-5: 24px;
-   --space-6: 32px;
-   --space-7: 48px;
-   --space-8: 64px;
+  /* 连续曲率风格与圆角尺寸分开配置。 */
+  --corner-shape: squircle;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-round: 99999px;
+  --radius-nav: 10px;
+  --radius-panel: 20px; /* 侧栏、会话列表和主区的面板圆角 */
 
-   /* 连续曲率风格与圆角尺寸分开配置。 */
-   --corner-shape: squircle;
-   --radius-sm: 12px;
-   --radius-md: 16px;
-   --radius-lg: 24px;
-   --radius-round: 99999px;
-   --radius-nav: 10px;
+  /* 布局 */
+  --frame-gap: 6px; /* 页面四周的外距 */
+  --panel-gap: 4px; /* 侧边栏、会话列表、主区之间的间距 */
+  --page-inset: 20px; /* 主内容的内边距 */
+  --header-height: 52px; /* 顶部栏的高度 */
 
+  --rail-width: 52px; /* 左侧图标栏宽度 */
+  --sidebar-width: 240px; /* 展开的会话列表宽度 */
 
-   /* 布局：10px 是面板外距的独立值 */
-   --frame-gap: 10px;
-   --page-inset: 32px;
-   --header-height: 64px;
-
-   --rail-width: 56px;
-   --sidebar-width: 184px;
-
-   --conversation-width: 736px;
-   --content-width: 880px;
+  --conversation-width: 736px;
+  --content-width: 880px;
 }
 
 /* 给 <html> 加上 theme-dark 类时，这组值会覆盖上面的同名变量。
