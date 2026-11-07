@@ -43,7 +43,8 @@
    --space-7: 48px;
    --space-8: 64px;
 
-   /* 圆角 */
+   /* 连续曲率风格与圆角尺寸分开配置。 */
+   --corner-shape: squircle;
    --radius-sm: 12px;
    --radius-md: 16px;
    --radius-lg: 24px;
