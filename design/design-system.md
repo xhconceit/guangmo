@@ -34,6 +34,7 @@
 |---|---|
 | 对话 | `chat-circle` |
 | 项目 | `circles-four` |
+| 学习 | `student` |
 | 发展方向 | `compass` |
 | 每周回看 | `check-circle` |
 | 记忆 | `brain` |

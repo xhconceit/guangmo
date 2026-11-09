@@ -1,14 +1,14 @@
 import { ComponentPropsWithoutRef } from "react";
 
-
 type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: "primary" | "ghost";
-}
+};
 
 const variantClasses = {
-  primary: "bg-string text-on-strong enabled:hover:opacity-85",
-  ghost: "bg-transparent text-secondary enabled:hover:bg-hover enabled:hover:text-foreground"
-}
+  primary: "bg-strong text-on-strong enabled:hover:opacity-85",
+  ghost:
+    "bg-transparent text-secondary enabled:hover:bg-hover enabled:hover:text-foreground",
+};
 
 export function Button({
   variant = "primary",
@@ -30,8 +30,12 @@ export function Button({
         "focus-visible:outline-2 focus-visible:outline-offset-2",
         "focus-visible:outline-focus",
         variantClasses[variant],
-        className
-      ].filter(Boolean).join(" ")}
-    >{children}</button>
-  )
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {children}
+    </button>
+  );
 }
