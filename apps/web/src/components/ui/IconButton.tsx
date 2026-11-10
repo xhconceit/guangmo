@@ -23,7 +23,8 @@ export function IconButton({
       type={type}
       aria-label={label}
       className={[
-        "inline-flex size-11 shrink-0 items-center justify-center",
+        "inline-flex size-[34px] shrink-0 items-center justify-center",
+        "[&_svg]:size-[18px] [&_svg]:shrink-0",
         "m-0 border-0 p-0 rounded-control",
         "bg-transparent text-secondary",
         "transition-colors",

@@ -132,41 +132,61 @@ export function ConversationWorkspace() {
   return (
     <section
       aria-label="当前对话"
-      className="mx-auto flex w-full max-w-3xl flex-col gap-6"
+      className="flex w-full min-w-0 flex-col"
     >
+
       <ConversationHeader
         disabled={isBusy}
         isCreating={isCreating}
         onNewConversation={handleCreate}
       />
+      <div
 
-      {error && (
-        <p role="alert" className="text-sm">
-          {error}
-        </p>
-      )}
+        className="
+  mx-auto flex w-full min-w-0
+      max-w-[var(--conversation-width)]
+      flex-col gap-6 py-6        "
+      >
 
-      {conversation ? (
-        <>
-          <ConversationMessageList
-            messages={conversation.messages}
-          />
+        {error && (
+          <p role="alert" className="text-sm">
+            {error}
+          </p>
+        )}
 
-          {isSending && (
-            <p role="status" className="text-sm text-zinc-500">
-              正在回复…
-            </p>
-          )}
+        {conversation ? (
+          <>
+            {
+              conversation.messages.length === 0 ? (
+                <div>
+                  <h1>今天，想从哪里开始？</h1>
+                  <p>给想做的事，留一点时间</p>
+                </div>
+              ) : (
 
-          <ConversationComposer
-            key={conversation.id}
-            isSending={isBusy}
-            onSend={handleSend}
-          />
-        </>
-      ) : (
-        <p>暂无对话，点击“新建对话”开始。</p>
-      )}
+                <ConversationMessageList
+                  messages={conversation.messages}
+                />
+              )
+            }
+
+
+            {isSending && (
+              <p role="status" className="text-sm text-zinc-500">
+                正在回复…
+              </p>
+            )}
+
+            <ConversationComposer
+              key={conversation.id}
+              isSending={isBusy}
+              onSend={handleSend}
+            />
+          </>
+        ) : (
+          <p>暂无对话，点击“新建对话”开始。</p>
+        )}
+      </div>
     </section>
   );
 }

@@ -1,9 +1,8 @@
 import type { ReactNode } from "react";
-import styles from "./app-shell.module.css";
 
 type AppShellProps = {
   sidebar: ReactNode;
-  header: ReactNode;
+  header?: ReactNode;
   children: ReactNode;
 };
 
@@ -12,12 +11,13 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
     <div
       className="
         grid min-h-dvh
-        grid-cols-[var(--rail-width)_minmax(0, 1fr)]
+        grid-cols-[var(--rail-width)_minmax(0,1fr)]
         gap-[var(--panel-gap)]
         bg-[var(--outer)]
         p-[var(--frame-gap)]
         max-sm:[--frame-gap:4px]
-        max-sm:[--page-inset:16px]
+        max-sm:[--page-inset:12px]
+        max-sm:[--header-height:48px]
     "
     >
       <aside
@@ -29,9 +29,24 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
         {sidebar}
       </aside>
 
-      <div className={styles.workspace}>
-        <header className={styles.header}>{header}</header>
-        <main className={styles.content}>{children}</main>
+      <div className="
+        flex min-w-0 flex-col
+        rounded-[var(--radius-panel)] bg-surface
+      ">
+        {header != null && (
+          <header className="
+          flex min-h-[var(--header-height)]
+          items-center justify-between
+          px-[var(--page-inset)]
+          ">{header}</header>
+        )}
+        <main
+          className="
+            m-0 w-full min-w-0 max-w-none flex-1
+            px-[var(--page-inset)] py-6
+            max-sm:py-4
+          "
+        >{children}</main>
       </div>
     </div>
   );
