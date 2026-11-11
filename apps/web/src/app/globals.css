@@ -14,8 +14,15 @@
 
   --color-strong: var(--strong);
   --color-on-strong: var(--on-strong);
+  --color-outer: var(--outer);
+
+  --spacing-panel-gap: var(--panel-gap);
+  --spacing-page-inset: var(--page-inset);
+  --spacing-frame-gap: var(--frame-gap);
 
   --radius-control:  var(--radius-button);
+  --radius-panel: 20px; /* 侧栏、会话列表和主区的面板圆角 */
+  --radius-nav: 20px; /* 侧栏导航项圆角 */
 
   --breakpoint-sm: 40rem; /* 640px */
   --breakpoint-md: 48rem; /* 768px */

@@ -37,7 +37,7 @@ export function AppSidebar() {
               href={item.href}
               className="
             group flex size-11 shrink-0 items-center justify-center
-            rounded-[var(--radius-nav)] text-secondary
+            rounded-nav text-secondary
             focus-visible:outline-2 focus-visible:outline-offset-[-2px]
             focus-visible:outline-focus
             "
@@ -48,7 +48,7 @@ export function AppSidebar() {
               <span
                 className={[
                   "flex size-9 items-center justify-center",
-                  "rounded-[var(--radius-nav)] transition-colors",
+                  "rounded-nav transition-colors",
                   active
                     ? "bg-selected text-foreground"
                     : "group-hover:bg-hover group-hover:text-foreground",

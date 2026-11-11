@@ -50,8 +50,6 @@
   --radius-lg: 24px;
   --radius-button: 20px; /* 所有非胶囊按钮及工具入口 */
   --radius-round: 99999px;
-  --radius-nav: 20px; /* 36px 侧栏图标底块的软圆方形 */
-  --radius-panel: 20px; /* 侧栏、会话列表和主区的面板圆角 */
 
   /* 布局 */
   --frame-gap: 6px; /* 页面四周的外距 */

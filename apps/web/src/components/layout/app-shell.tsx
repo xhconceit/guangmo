@@ -10,32 +10,27 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
   return (
     <div
       className="
-        grid min-h-dvh
+        grid h-dvh overflow-hidden
         grid-cols-[var(--rail-width)_minmax(0,1fr)]
-        gap-[var(--panel-gap)]
-        bg-[var(--outer)]
-        p-[var(--frame-gap)]
-        max-sm:[--frame-gap:4px]
-        max-sm:[--page-inset:12px]
+        gap-panel-gap
+        bg-outer
+        p-frame-gap max-sm:p-1
         max-sm:[--header-height:48px]
     "
     >
       <aside
         className="
-    sticky top-[var(--frame-gap)] self-start
-    h-[calc(100dvh_-_var(--frame-gap)_*_2)]
-    overflow-y-auto
-    rounded-[var(--radius-panel)] bg-surface
-    px-1 py-2
-      "
+          min-h-0 overflow-y-auto
+    rounded-panel bg-surface
+    px-1 py-2"
       >
         {sidebar}
       </aside>
 
       <div
         className="
-        flex min-w-0 flex-col
-        rounded-[var(--radius-panel)] bg-surface
+        flex min-w-0 min-h-0  flex-col
+        rounded-panel bg-surface
       "
       >
         {header != null && (
@@ -43,7 +38,7 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
             className="
           flex min-h-[var(--header-height)]
           items-center justify-between
-          px-[var(--page-inset)]
+          px-page-inset max-sm:px-3
           "
           >
             {header}
@@ -51,9 +46,10 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
         )}
         <main
           className="
-            m-0 w-full min-w-0 max-w-none flex-1
-            px-[var(--page-inset)] py-6
-            max-sm:py-4
+            m-0 w-full min-h-0 min-w-0 max-w-none flex-1
+            overflow-y-auto
+            px-page-inset max-sm:px-3
+            py-6 max-sm:py-4
           "
         >
           {children}
