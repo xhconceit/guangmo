@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusCircleIcon, DotsThreeIcon, ClockCounterClockwiseIcon, MoonIcon } from "@phosphor-icons/react";
+import { PlusCircleIcon, DotsThreeIcon, ClockCounterClockwiseIcon, MoonIcon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button"
 import { IconButton } from "@/components/ui/IconButton"
 
@@ -27,7 +27,7 @@ export function ConversationHeader({
           title="新建对话"
           aria-label={isCreating ? "正在创建对话" : "新建对话"}
           variant="soft"
-          size="toolbar"
+          size="sm"
           className="whitespace-nowrap"
           disabled={disabled || isCreating}
           onClick={onNewConversation}
@@ -46,7 +46,7 @@ export function ConversationHeader({
 
         <Button
           variant="ghost"
-          size="toolbar"
+          size="sm"
           title="历史对话"
           aria-label="历史对话"
           className="
@@ -67,11 +67,11 @@ export function ConversationHeader({
         </Button>
 
 
-        <IconButton label="切换暗色主题" title="切换暗色主题">
+        <IconButton size="sm" label="切换暗色主题" title="切换暗色主题">
           <MoonIcon weight="regular" aria-hidden="true" />
         </IconButton>
 
-        <IconButton label="关于此原型" title="关于此原型">
+        <IconButton size="sm" label="关于此原型" title="关于此原型">
           <DotsThreeIcon weight="regular" aria-hidden="true" />
         </IconButton>
 

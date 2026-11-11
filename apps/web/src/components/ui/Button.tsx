@@ -2,22 +2,20 @@ import { ComponentPropsWithoutRef } from "react";
 
 type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: "primary" | "ghost" | "soft";
-  size?: "sm" | "md" | "toolbar";
+  size?: "sm" | "md";
 };
 
 const variantClasses = {
   primary: "bg-strong text-on-strong enabled:hover:opacity-85",
   ghost:
     "bg-transparent text-secondary enabled:hover:bg-hover enabled:hover:text-foreground",
-  soft:
-    "bg-selected text-secondary enabled:hover:bg-hover enabled:hover:text-foreground",
+  soft: "bg-selected text-secondary enabled:hover:bg-hover enabled:hover:text-foreground",
 };
 
 const sizeClasses = {
-  sm: "min-h-8 px-3 py-[5px] text-[11px]",
-  md: "min-h-11 px-3 py-2 text-sm",
-  toolbar: "px-3 py-2 text-xs leading-[1.6]",
-}
+  sm: "min-h-[34px] px-3 py-1.5 text-xs leading-5",
+  md: "min-h-11 px-3 py-2 text-sm leading-5",
+};
 
 export function Button({
   variant = "primary",

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp } from "lucide-react";
+import { ArrowUpIcon } from "@/components/ui/Icon";
 import {
   useState,
   useRef
@@ -85,7 +85,7 @@ export function ConversationComposer({
         disabled={!content.trim() || isSending}
         type="submit"
       >
-        <ArrowUp aria-hidden="true" size={18} />
+        <ArrowUpIcon aria-hidden="true" size={18} />
       </button>
     </form>
   )

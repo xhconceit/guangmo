@@ -22,23 +22,32 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
     >
       <aside
         className="
-          sticky top-[var(--frame-gap)] self-start
-          h-[calc(100dvh_-_var(--frame-gap)_*_2)]
+    sticky top-[var(--frame-gap)] self-start
+    h-[calc(100dvh_-_var(--frame-gap)_*_2)]
+    overflow-y-auto
+    rounded-[var(--radius-panel)] bg-surface
+    px-1 py-2
       "
       >
         {sidebar}
       </aside>
 
-      <div className="
+      <div
+        className="
         flex min-w-0 flex-col
         rounded-[var(--radius-panel)] bg-surface
-      ">
+      "
+      >
         {header != null && (
-          <header className="
+          <header
+            className="
           flex min-h-[var(--header-height)]
           items-center justify-between
           px-[var(--page-inset)]
-          ">{header}</header>
+          "
+          >
+            {header}
+          </header>
         )}
         <main
           className="
@@ -46,7 +55,9 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
             px-[var(--page-inset)] py-6
             max-sm:py-4
           "
-        >{children}</main>
+        >
+          {children}
+        </main>
       </div>
     </div>
   );
