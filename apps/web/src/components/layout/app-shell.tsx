@@ -21,8 +21,8 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
       <aside
         className="
           min-h-0 overflow-y-auto
-    rounded-panel bg-surface
-    px-1 py-2"
+          rounded-panel bg-surface
+          px-1 py-2"
       >
         {sidebar}
       </aside>
