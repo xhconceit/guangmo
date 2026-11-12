@@ -19,6 +19,7 @@
   --spacing-panel-gap: var(--panel-gap);
   --spacing-page-inset: var(--page-inset);
   --spacing-frame-gap: var(--frame-gap);
+  --spacing-header: var(--header-height);
 
   --radius-control:  var(--radius-button);
   --radius-panel: 20px; /* 侧栏、会话列表和主区的面板圆角 */
@@ -30,188 +31,75 @@
   --breakpoint-xl: 80rem;/* 1280px */
   --breakpoint-2xl: 96rem;/* 1536px */
 
+  --container-conversation: var(--conversation-width);
+
+}
+
+@utility grid-cols-workspace {
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
 }
 
 @layer base {
+  /* Rounded surfaces and pseudo-elements share smooth corners.
+     Unsupported browsers keep their existing border-radius rendering. */
+  @supports (corner-shape: squircle) {
+    *,
+    *::before,
+    *::after {
+      corner-shape: var(--corner-shape);
+    }
 
-
-/* Rounded surfaces and pseudo-elements share smooth corners.
-   Unsupported browsers keep their existing border-radius rendering. */
-@supports (corner-shape: squircle) {
-  *,
-  *::before,
-  *::after {
-    corner-shape: var(--corner-shape);
+    [data-corner="round"] {
+      corner-shape: round;
+    }
   }
 
-  [data-corner="round"] {
-    corner-shape: round;
+  body {
+    background: var(--outer);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
   }
-}
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--outer);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
-}
-
-main {
-  max-width: 720px;
-  margin: 80px auto;
-  padding: 0 24px;
-}
-
-h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-textarea {
-  box-sizing: border-box;
-  width: 100%;
-  margin-top: 24px;
-  padding: 16px;
-  border: 1px solid var(--input-line);
-  border-radius: 12px;
-  background: var(--input);
-  color: var(--text);
-  font: inherit;
-  resize: vertical;
-}
-
-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--focus);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
-}
-
-button {
-  margin-top: 12px;
-  padding: 10px 16px;
-  border: 0;
-  border-radius: var(--radius-button);
-  background: var(--strong);
-  color: var(--on-strong);
-  font: inherit;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.reply {
-  white-space: pre-line;
-  line-height: 1.8;
-  margin-top: 24px;
-}
-
-.prompts {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-}
-
-.prompts button {
-  margin-top: 0;
-  background: var(--surface);
-  border: 0;
-  color: var(--secondary);
-  font-size: 14px;
-}
-
-.app-shell {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 10px;
-  min-height: 100dvh;
-  padding: 10px;
-  background: var(--outer);
-}
-
-.app-shell__sidebar {
-  padding: 12px 6px;
-  border-radius: 20px;
-  background: var(--sidebar);
-}
-
-.app-shell__workspace {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  border-radius: 20px;
-  background: var(--surface);
-}
-
-.app-shell__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 64px;
-  padding: 0 32px;
-}
-
-main.app-shell__content {
-  flex: 1;
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-  margin: 0;
-  padding: 24px 32px;
-}
-
-@media (max-width: 640px) {
-  .app-shell {
-    gap: 6px;
-    padding: 6px;
+  h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
   }
-  .app-shell__header {
-    min-height: 56px;
-    padding: 0 16px;
-  }
-  main.app-shell__content {
+
+  textarea {
+    width: 100%;
+    margin-top: 24px;
     padding: 16px;
+    border: 1px solid var(--input-line);
+    border-radius: 12px;
+    background: var(--input);
+    color: var(--text);
+    font: inherit;
+    resize: vertical;
   }
-}
 
-.app-sidebar {
-  display: grid;
-  gap: 4px;
-}
+  textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus);
+  }
 
-.app-sidebar__link {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-nav);
-  color: var(--secondary);
-  text-decoration: none;
-}
+  button:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
 
-.app-sidebar__link:hover {
-  background: var(--hover);
-}
+  button {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: var(--radius-button);
+    background: var(--strong);
+    color: var(--on-strong);
+    font: inherit;
+    cursor: pointer;
+  }
 
-.app-sidebar__link[aria-current="page"] {
-  background: var(--selected);
-  color: var(--text);
-}
-
-.app-sidebar__link:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

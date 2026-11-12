@@ -144,7 +144,7 @@ export function ConversationWorkspace() {
 
         className="
   mx-auto flex w-full min-w-0
-      max-w-[var(--conversation-width)]
+      max-w-conversation
       flex-col gap-6 py-6        "
       >
 

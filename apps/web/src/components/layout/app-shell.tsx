@@ -11,7 +11,7 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
     <div
       className="
         grid h-dvh overflow-hidden
-        grid-cols-[var(--rail-width)_minmax(0,1fr)]
+        grid-cols-workspace
         gap-panel-gap
         bg-outer
         p-frame-gap max-sm:p-1
@@ -36,7 +36,7 @@ export function AppShell({ sidebar, header, children }: AppShellProps) {
         {header != null && (
           <header
             className="
-          flex min-h-[var(--header-height)]
+          flex min-h-header
           items-center justify-between
           px-page-inset max-sm:px-3
           "
