@@ -11,7 +11,7 @@ type IconButtonProps = Omit<
 
 const sizeClasses = {
   sm: "size-[34px] [&_svg]:size-[18px]",
-  md: "size-11 [&_svg]:size-5",
+  md: "size-9 [&_svg]:size-5",
 };
 
 export function IconButton({

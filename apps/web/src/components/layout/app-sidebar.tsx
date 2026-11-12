@@ -8,8 +8,11 @@ import {
   CheckCircleIcon,
   BrainIcon,
   LinkIcon,
+  MoonIcon,
+  SunIcon
 } from "@/components/ui/Icon";
 import { IconButton } from "../ui/IconButton";
+import { useState } from "react";
 
 const navigation = [
   { href: "/", label: "对话", icon: ChatCircleIcon },
@@ -18,8 +21,10 @@ const navigation = [
   { href: "/review", label: "每周回看", icon: CheckCircleIcon },
   { href: "/memory", label: "记忆", icon: BrainIcon },
 ];
+
 export function AppSidebar() {
   const pathname = usePathname();
+  const [isDark, setIsDark] = useState(false)
 
   return (
     <div className="flex min-h-full flex-col">
@@ -64,7 +69,54 @@ export function AppSidebar() {
           );
         })}
       </nav>
-      <div className="mt-auto flex shrink-0 flex-col gap-1 pt-3">
+      <div className="mt-auto flex shrink-0 flex-col items-center gap-1 pt-3">
+        <IconButton
+          size="md"
+          label="切换亮暗模式"
+          title="切换亮暗模式"
+          onClick={(event) => {
+            const nextIsDark = !isDark
+
+            const rect = event.currentTarget.getBoundingClientRect()
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            const radius = Math.hypot(
+              Math.max(x, window.innerWidth - x),
+              Math.max(y, window.innerHeight - y)
+            )
+
+            const changeTheme = () => {
+              document.documentElement.classList.toggle("theme-dark", nextIsDark)
+              setIsDark(nextIsDark)
+            }
+
+            if (document.startViewTransition) {
+              const transition = document.startViewTransition(changeTheme)
+
+              transition.ready.then(() => {
+                document.documentElement.animate({
+                  clipPath: [
+                    `circle(0px at ${x}px ${y}px)`,
+                    `circle(${radius}px at ${x}px ${y}px)`
+                  ],
+                },
+                  {
+                    duration: 400,
+                    easing: "ease-in-out",
+                    pseudoElement: "::view-transition-new(root)"
+                  })
+              })
+            } else {
+              changeTheme()
+            }
+
+          }}
+        >
+          {
+            isDark ? <SunIcon aria-hidden="true" /> : <MoonIcon aria-hidden="true" />
+          }
+        </IconButton>
+
         <IconButton size="md" label="已连接的生活" title="已连接的生活">
           <LinkIcon aria-hidden="true" />
         </IconButton>

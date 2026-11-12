@@ -1,0 +1,184 @@
+/* Homepage: a quiet welcome, one prominent composer, three optional starting points. */
+main:has(#today.active) .topbar {
+  display: none;
+}
+
+#today .chat-home.has-messages {
+  height: calc(100dvh - var(--frame-gap) * 2);
+}
+
+#today .chat-home:not(.has-messages) {
+  max-width: 700px;
+  padding: 40px 0 100px;
+}
+
+#today .welcome {
+  margin-bottom: 32px;
+}
+
+#today .welcome::before {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 24px;
+  background: var(--text);
+  mask: url("../design/guangmo-logo-river.svg") center / contain no-repeat;
+}
+
+#today .welcome h1 {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -1px;
+}
+
+#today .welcome p {
+  margin-top: 12px;
+  color: var(--secondary);
+  font-size: 14px;
+  letter-spacing: .5px;
+}
+
+#today .new-composer {
+  padding: 22px 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--surface);
+  box-shadow: 0 8px 32px #25203508, 0 1px 4px #25203505;
+  transition: border-color .18s ease, background-color .18s ease;
+}
+
+#today .new-composer:focus-within {
+  border-color: color-mix(in srgb, #a995dc 40%, var(--line));
+  box-shadow: 0 8px 32px #62518c0c, 0 0 0 2px #a995dc0a;
+}
+
+#today .new-composer textarea {
+  min-height: 88px;
+  padding: 0 4px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+#today .composer-toolbar {
+  margin-top: 16px;
+}
+
+#today .composer-tools { gap: 8px; }
+
+#today .attach-button,
+#today .context-button {
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  corner-shape: round;
+  background: var(--surface);
+  color: var(--secondary);
+}
+
+#today .attach-button { width: 36px; }
+#today .context-button { padding: 0 12px; gap: 8px; }
+#today .attach-button:hover,
+#today .context-button:hover { background: var(--panel); }
+
+#today .send {
+  width: 52px;
+  height: 36px;
+  border-radius: 999px;
+  corner-shape: round;
+  background: linear-gradient(135deg, #ebc8ae 0%, #c18af0 35%, #9a8af0 70%, #b9b2fb 100%);
+  color: #fff;
+}
+
+#today .send:not(:disabled):hover {
+  background: linear-gradient(135deg, #e8b998 0%, #b97ce8 35%, #8c7ce0 70%, #a89aef 100%);
+  opacity: 1;
+}
+
+#today .send:disabled {
+  opacity: .45;
+}
+
+.theme-dark #today .new-composer {
+  background: var(--input);
+  box-shadow: 0 8px 32px #00000020;
+}
+
+.theme-dark #today .attach-button,
+.theme-dark #today .context-button { background: transparent; }
+.theme-dark #today .attach-button:hover,
+.theme-dark #today .context-button:hover { background: var(--hover); }
+
+#today #context-menu { bottom: 64px; }
+
+#today .prompt-options {
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#today .prompt-options button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+#today .prompt-options button:hover {
+  border-color: var(--input-line);
+  background: var(--panel);
+  color: var(--text);
+}
+
+#today .prompt-options span {
+  display: inline;
+  color: var(--muted);
+}
+
+/* Keep the conversation layout compact once messages exist. */
+#today .has-messages .welcome,
+#today .has-messages .prompt-options {
+  display: none;
+}
+
+#today .has-messages .new-composer textarea {
+  min-height: 52px;
+}
+
+@media (max-width: 640px) {
+  #today .chat-home:not(.has-messages) {
+    padding: 32px 0 56px;
+  }
+
+  #today .welcome::before {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+  }
+
+  #today .welcome { margin-bottom: 24px; }
+  #today .welcome h1 { font-size: 24px; letter-spacing: -.5px; }
+  #today .welcome p { font-size: 13px; }
+  #today .new-composer { padding: 16px 12px 12px; border-radius: 22px; }
+  #today .new-composer textarea { font-size: 16px; }
+  #today .attach-button { width: 44px; height: 44px; }
+  #today .context-button { height: 44px; }
+  #today .send { width: 52px; height: 44px; }
+  #today #context-menu { left: 12px; bottom: 68px; }
+  #today .prompt-options { gap: 8px; margin-top: 16px; }
+  #today .prompt-options button { min-height: 44px; font-size: 11px; padding: 8px 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #today .new-composer { transition: none; }
+}
+
+@media (max-height: 600px) {
+  #today .chat-home:not(.has-messages) { padding: 24px 0; }
+  #today .welcome::before { display: none; }
+}

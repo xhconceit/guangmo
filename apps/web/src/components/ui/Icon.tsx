@@ -45,4 +45,5 @@ export {
   LinkIcon,
   MoonIcon,
   PlusCircleIcon,
+  SunIcon,
 } from "@phosphor-icons/react";

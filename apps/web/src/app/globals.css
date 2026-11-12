@@ -103,3 +103,17 @@
     cursor: not-allowed;
   }
 }
+/* @media (prefers-reduced-motion: no-preference) { */
+/*   body, */
+/*   body * { */
+/*     transition-property: background-color, color, border-color; */
+/*     transition-duration: 320ms; */
+/* transition-timing-function: ease-in-out; */
+/*   } */
+/* } */
+
+::view-transition-old(root),
+::view-transition-new(root){
+  animation: none;
+  mix-blend-mode: normal;
+}
