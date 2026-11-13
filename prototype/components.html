@@ -3,26 +3,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>组件库 · 广莫</title>
+<script>
+try {
+  document.documentElement.classList.toggle('theme-dark', localStorage.getItem('guangmo-theme') === 'dark');
+} catch {}
+</script>
 <link rel="stylesheet" href="./theme.css">
 <style>
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--surface); color: var(--text); font: 15px/1.6 system-ui, sans-serif; }
 header, main { max-width: 560px; margin: auto; }
-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; gap: 16px; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 10px 24px; gap: 12px; }
 header a { color: var(--secondary); text-decoration: none; }
 header a:hover { color: var(--text); }
 #theme { background: transparent; border-color: transparent; }
 #theme:hover { background: var(--hover); }
-main { padding: 18px 24px 40px; }
+main { padding: 12px 24px 24px; }
 h1 { margin: 0 0 16px; font-size: 28px; font-weight: 650; letter-spacing: -.045em; }
-.samples { display: grid; gap: 24px; }
-h2 { font-size: 14px; font-weight: 600; margin: 0 0 8px; }
+.samples { display: grid; gap: 16px; }
+h2 { font-size: 14px; font-weight: 600; margin: 0 0 6px; }
 .preview { max-width: 380px; }
-.row:not([hidden]) { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.row:not([hidden]) { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 button, input, textarea, select { font: inherit; color: inherit; }
-button { padding: 7px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--hover); cursor: pointer; }
+button { padding: 5px 10px; border: 1px solid transparent; border-radius: 12px; background: var(--hover); cursor: pointer; font-size: 14px; line-height: 20px; }
 button:hover { background: var(--selected); }
-.primary { background: var(--strong); border-color: var(--strong); color: var(--on-strong); }
+.primary { background: var(--strong); color: var(--on-strong); }
 .primary:hover { background: var(--strong); opacity: .85; }
 .secondary {
   padding: 4px 10px;
@@ -36,23 +41,63 @@ button:hover { background: var(--selected); }
 .secondary:hover { background: var(--selected); }
 .ghost { border-color: transparent; background: transparent; }
 button:disabled { background: var(--selected); color: var(--muted); cursor: default; }
-.icon { width: 40px; padding-inline: 0; font-size: 18px; line-height: 1.4; }
-.icon[aria-pressed=true] { background: var(--selected); border-color: var(--input-line); }
+.icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; font-size: 18px; line-height: 1; }
+.pill { border-radius: 999px; }
+.icon.circle { border-radius: 50%; }
+.icon[aria-pressed=true] { background: var(--selected); }
 .field-label { width: 100%; }
 .field:disabled { background: var(--panel); color: var(--muted); }
 .hint { display: block; margin: 0; font-size: 12px; color: var(--secondary); }
-[role=tablist] { display: inline-flex; padding: 3px; gap: 2px; border-radius: 13px; background: var(--hover); }
-[role=tab] { border-color: transparent; background: transparent; padding: 5px 14px; }
-[role=tab][aria-selected=true] { background: var(--surface); box-shadow: var(--frame-shadow); }
+.tab-switch {
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+  padding: 3px;
+  gap: 6px;
+  border-radius: 13px;
+  background: var(--hover);
+}
+.tab-switch::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0 auto auto 0;
+  width: var(--tab-width);
+  height: var(--tab-height);
+  transform: translate(var(--tab-x), var(--tab-y));
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--frame-shadow);
+  transition: transform 220ms ease;
+}
+.tab-switch [role=tab] {
+  position: relative;
+  z-index: 1;
+  border-color: transparent;
+  background: transparent;
+  padding: 4px 12px;
+}
+.tab-switch [role=tab] { color: var(--secondary); }
+.tab-switch [role=tab][aria-selected=true], .tab-switch [role=tab]:hover { color: var(--text); background: transparent; }
 progress { width: min(220px, 70%); height: 8px; }
-label { display: grid; gap: 5px; font-size: 14px; }
-.field { width: 100%; padding: 8px 10px; border: 1px solid transparent; border-radius: 12px; background: var(--panel); }
-.field:focus { outline: none; border-color: var(--focus); }
+label { display: grid; gap: 4px; font-size: 14px; }
+.field { width: 100%; padding: 5px 12px; border: 1px solid transparent; border-radius: 12px; background: var(--panel); font-size: 14px; line-height: 20px; }
+input.field { border-radius: 999px; }
+textarea.field { display: block; border-radius: 20px; }
+.field:where(:not(:disabled):hover) { border-color: var(--input-line); }
+.field:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 2px color-mix(in srgb, var(--focus) 15%, transparent); }
+input.field, textarea.field,
+input.field:hover, textarea.field:hover,
+input.field:focus, textarea.field:focus {
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 ::placeholder { color: var(--muted); opacity: 1; }
 textarea { resize: vertical; }
 input, progress { accent-color: var(--strong); }
-.switch { display: inline-flex; align-items: center; gap: 8px; }
+.switch { display: inline-flex; align-items: center; gap: 6px; }
 .switch input {
   appearance: none;
   width: 34px;
@@ -74,7 +119,7 @@ input, progress { accent-color: var(--strong); }
 .switch input:checked { background: var(--strong); }
 .switch input:checked::before { transform: translateX(14px); background: var(--on-strong); }
 [role=tabpanel], output { color: var(--secondary); font-size: 14px; }
-[role=tabpanel]:not([hidden]) { margin-top: 8px; }
+[role=tabpanel]:not([hidden]) { margin-top: 6px; }
 summary { cursor: pointer; }
 details ul { list-style: none; padding: 0; margin: 8px 0 0; }
 details li + li { margin-top: 4px; }
@@ -92,17 +137,21 @@ details li + li { margin-top: 4px; }
   color: var(--on-strong);
   font-size: 13px;
 }
-.tip:hover [role=tooltip], .tip:focus-within [role=tooltip] { display: block; }
+.tip:not(.dismissed):hover [role=tooltip], .tip:not(.dismissed):focus-within [role=tooltip] { display: block; }
 #notice { position: fixed; z-index: 5; right: 24px; bottom: 24px; margin: 0; font-size: 14px; }
-#notice:not(:empty) { padding: 10px 16px; border-radius: 14px; background: var(--strong); color: var(--on-strong); box-shadow: var(--popup-shadow); }
+#notice:not(:empty) { padding: 6px 12px; border-radius: 14px; background: var(--strong); color: var(--on-strong); box-shadow: var(--popup-shadow); }
+#notice { max-width: calc(100vw - 48px); overflow-wrap: anywhere; }
 #menu-picker { width: fit-content; }
 #menu-picker .picker-panel { min-width: 140px; }
-#menu-picker ul, #menu-status { margin: 0; }
-#menu-status:not(:empty) { margin-top: 6px; }
+#menu-picker ul { margin: 0; }
 #menu-picker li button { width: 100%; text-align: left; }
-dialog { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--text); max-width: min(420px, calc(100% - 32px)); box-shadow: var(--popup-shadow); }
-dialog::backdrop { background: color-mix(in srgb, var(--outer) 60%, transparent); }
-dialog p { color: var(--secondary); }
+dialog { padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--text); max-width: min(420px, calc(100% - 32px)); box-shadow: var(--popup-shadow); }
+dialog::backdrop {
+  background: color-mix(in srgb, var(--outer) 40%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+dialog p { margin: 8px 0 12px; color: var(--secondary); font-size: 14px; }
 @media (max-width: 560px) {
   header { padding-inline: 16px; }
   main { padding-inline: 12px; }
@@ -112,7 +161,7 @@ button, .field {
 }
 .switch input { transition: background-color 180ms ease; }
 .switch input::before { transition: transform 180ms ease, background-color 180ms ease; }
-input:is([type=checkbox]:not([role=switch]), [type=radio]) {
+input[type=checkbox]:not([role=switch]), input[type=radio] {
   appearance: none;
   display: grid;
   place-items: center;
@@ -130,7 +179,7 @@ input:is([type=checkbox]:not([role=switch]), [type=radio]):checked {
   background: var(--strong);
   border-color: var(--strong);
 }
-input:is([type=checkbox]:not([role=switch]), [type=radio])::before {
+input[type=checkbox]:not([role=switch])::before, input[type=radio]::before {
   content: "";
   width: 7px;
   height: 4px;
@@ -144,6 +193,7 @@ input[type=radio]::before {
   width: 7px;
   height: 7px;
   border: 0;
+  transform: none;
   border-radius: 50%;
   background: var(--on-strong);
 }
@@ -177,14 +227,53 @@ input:disabled { opacity: .55; cursor: default; }
   transition: transform 150ms ease;
 }
 details.picker { position: relative; max-width: 380px; }
-.picker summary { list-style: none; }
+details.picker[open] { z-index: 4; }
+#detail-picker { width: 160px; max-width: 100%; }
+#date-picker { width: 280px; max-width: 100%; }
+#detail-picker > summary { padding: 5px 32px 5px 12px; font-size: 14px; line-height: 20px; }
+#detail-picker > .picker-panel { padding: 4px; border-radius: 16px; gap: 0; }
+#detail-picker .picker-options button { padding: 4px 10px; font-size: 13px; line-height: 18px; }
+.picker summary { position: relative; list-style: none; border-radius: 999px; -webkit-user-select: none; user-select: none; }
+.picker > summary.field { padding-right: 32px; }
 .picker summary::-webkit-details-marker { display: none; }
-.picker summary::after { content: '⌄'; float: right; }
-.picker-panel { position: absolute; z-index: 3; inset: calc(100% + 6px) 0 auto; box-shadow: var(--popup-shadow); padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
-.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; }
-.calendar button { padding-inline: 0; }
-.calendar [aria-pressed=true], .picker-panel [aria-pressed=true] { background: var(--selected); }
-.calendar-nav { justify-content: space-between; margin-bottom: 8px; }
+.picker summary::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: var(--secondary);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4.5 6.5 3.5 3.5 3.5-3.5' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: translateY(-50%);
+  transition: transform 180ms ease;
+  pointer-events: none;
+}
+.picker[open] > summary::after { transform: translateY(-50%) rotate(180deg); }
+.picker summary:focus:not(:focus-visible) { box-shadow: none; border-color: var(--input-line); }
+.picker-panel { position: absolute; z-index: 3; inset: calc(100% + 6px) 0 auto; box-shadow: 0 4px 16px color-mix(in srgb, var(--text) 8%, transparent); padding: 6px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+.picker-panel { max-height: var(--picker-max-height, none); overflow-y: auto; overscroll-behavior: contain; }
+.picker.opens-up > .picker-panel { inset: auto 0 calc(100% + 6px); }
+#date-picker > .picker-panel { width: min(100%, 280px); padding: 10px; }
+.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; text-align: center; }
+.calendar button { position: relative; justify-self: center; width: 32px; max-width: 100%; height: 32px; padding: 0; border-color: transparent; border-radius: 50%; background: transparent; font-size: 13px; line-height: 30px; font-variant-numeric: tabular-nums; }
+.calendar button:hover { background: var(--hover); }
+.calendar > span { color: var(--muted); font-size: 11px; line-height: 22px; }
+.calendar [aria-current=date] { font-weight: 600; }
+.calendar [aria-current=date]::after { content: ''; position: absolute; bottom: 2px; left: calc(50% - 1.5px); width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+.calendar [aria-pressed=true] { background: var(--strong); color: var(--on-strong); }
+.calendar [aria-pressed=true]:hover { background: var(--strong); }
+.calendar-nav { justify-content: space-between; margin-bottom: 4px; }
+.calendar-nav strong { font-size: 14px; font-weight: 600; }
+.calendar-nav button { width: 32px; height: 32px; padding: 0; border-color: transparent; border-radius: 50%; background: transparent; color: var(--secondary); }
+.calendar-nav button:hover { background: var(--hover); color: var(--text); }
+.picker-options { display: grid; gap: 2px; }
+.picker-options button, #menu-picker li button { display: flex; align-items: center; justify-content: space-between; padding: 5px 12px; border-color: transparent; border-radius: 999px; background: transparent; text-align: left; font-size: 14px; line-height: 20px; }
+#menu-picker li + li { margin-top: 2px; }
+.picker-options button:hover, #menu-picker li button:hover { background: var(--hover); }
+.picker-options [aria-pressed=true] { background: var(--panel); }
+.picker-options button::after { content: ''; width: 10px; height: 6px; border: solid currentColor; border-width: 0 0 1.5px 1.5px; transform: rotate(-45deg); opacity: 0; }
+.picker-options [aria-pressed=true]::after { opacity: 1; }
 @keyframes appear {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
@@ -209,19 +298,17 @@ dialog[open] { translate: 0 0; }
   dialog[open], dialog[open]::backdrop { opacity: 0; }
   dialog[open] { translate: 0 5px; }
 }
-.picker::details-content {
-  opacity: 0;
-  transition: opacity 180ms ease, content-visibility 180ms allow-discrete;
+@keyframes picker-enter {
+  from { opacity: 0; transform: translateY(var(--picker-enter-y, -3px)); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.picker[open]::details-content { opacity: 1; }
-@starting-style {
-  .picker[open]::details-content { opacity: 0; }
-}
+.picker.opens-up { --picker-enter-y: 3px; }
+.picker[open] > .picker-panel { animation: picker-enter 140ms ease-out; }
 #notice { opacity: 0; translate: 0 5px; pointer-events: none; transition: opacity 180ms ease, translate 180ms ease; }
-#notice.visible { opacity: 1; translate: 0 0; }
+#notice.visible { opacity: 1; translate: 0 0; pointer-events: auto; }
 .sample-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14px; }
 .sample-table th, .sample-table td {
-  padding: 12px 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid var(--line);
   text-align: left;
 }
@@ -230,22 +317,23 @@ dialog[open] { translate: 0 0; }
 .sample-table tbody tr { transition: background-color 160ms ease; }
 .sample-table tbody tr:hover { background: var(--panel); }
 .sample-table.compact { font-size: 12px; }
-.sample-table.compact :is(th, td) { padding: 10px; }
+.sample-table.compact :is(th, td) { padding: 5px 8px; }
 .table-caption { display: block; margin-top: 6px; color: var(--secondary); font-size: 12px; }
-.table-caption + .sample-table { margin-top: 16px; }
+.table-caption + .sample-table { margin-top: 12px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
-.size-row { margin-top: 10px; }
+.size-row { margin-top: 8px; }
 .size-example { display: grid; justify-items: start; gap: 4px; }
 .size-example small { color: var(--secondary); font-size: 12px; }
 .size-example button { min-height: var(--sample-size); padding-block: 0; }
-.size-example .icon { width: var(--sample-size); }
+.size-example .icon { width: var(--sample-size); height: var(--sample-size); }
 .size-example .composer-sample { min-height: var(--sample-size); }
 .composer-sizes { display: grid; gap: 8px; max-width: 380px; }
 .composer-sizes .size-example { width: 100%; }
+button:not(:disabled):active { opacity: .75; }
 @supports (corner-shape: squircle) {
-  .picker-panel, .sample-table, dialog,
+  .sample-table, dialog,
   #notice, .tip [role=tooltip], input[type=checkbox]:not([role=switch]) {
     corner-shape: squircle;
   }
@@ -266,6 +354,10 @@ dialog[open] { translate: 0 0; }
         <button type="button" class="ghost">取消</button>
         <button type="button" disabled>不可用</button>
       </div>
+      <div class="row size-row" role="group" aria-label="胶囊按钮示例">
+        <div class="size-example" style="--sample-size: 40px"><button type="button" class="primary pill">保存</button><small>胶囊 · 主要</small></div>
+        <div class="size-example" style="--sample-size: 28px"><button type="button" class="secondary pill">预览</button><small>胶囊 · 次要</small></div>
+      </div>
       <div class="row size-row"><div class="size-example" style="--sample-size: 32px"><button type="button" class="primary">发送</button><small>伴读发送 · 32px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>桌面发送 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="primary">发送</button><small>移动端发送 · 44px</small></div></div>
     </section>
     <section>
@@ -274,6 +366,10 @@ dialog[open] { translate: 0 0; }
         <button type="button" class="icon" title="添加" aria-label="添加">＋</button>
         <button type="button" class="icon ghost" id="favorite" aria-label="收藏" aria-pressed="false">☆</button>
         <button type="button" class="icon" aria-label="移除" disabled>−</button>
+      </div>
+      <div class="row size-row" role="group" aria-label="圆形图标按钮示例">
+        <div class="size-example" style="--sample-size: 40px"><button type="button" class="icon circle" aria-label="圆形添加示例">＋</button><small>圆形 · 默认</small></div>
+        <div class="size-example" style="--sample-size: 40px"><button type="button" class="icon circle primary" aria-label="圆形发送示例">↑</button><small>圆形 · 主要</small></div>
       </div>
       <div class="row size-row"><div class="size-example" style="--sample-size: 32px"><button type="button" class="icon" aria-label="关闭示例">×</button><small>关闭 · 32px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="icon" aria-label="添加附件示例">＋</button><small>桌面附件 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="icon" aria-label="添加附件示例">＋</button><small>移动端附件 · 44px</small></div></div>
     </section>
@@ -299,7 +395,7 @@ dialog[open] { translate: 0 0; }
       <h2>下拉选择</h2>
       <details class="picker" id="detail-picker">
         <summary class="field" aria-label="内容详略：简明">简明</summary>
-        <div class="picker-panel row">
+        <div class="picker-panel picker-options">
           <button type="button" aria-pressed="true">简明</button>
           <button type="button" aria-pressed="false">详细</button>
         </div>
@@ -342,7 +438,7 @@ dialog[open] { translate: 0 0; }
     </section>
     <section>
       <h2>标签页</h2>
-      <div class="row" role="tablist" aria-label="资料视图">
+      <div class="row tab-switch" role="tablist" aria-label="资料视图">
         <button type="button" role="tab" id="overview-tab" aria-selected="true" aria-controls="overview">概览</button>
         <button type="button" role="tab" id="notes-tab" aria-selected="false" aria-controls="notes" tabindex="-1">笔记</button>
       </div>
@@ -358,7 +454,6 @@ dialog[open] { translate: 0 0; }
           <li><button type="button" data-message="已选择重命名">重命名</button></li>
           <li><button type="button" data-message="已选择归档">归档</button></li>
           </ul>
-          <p id="menu-status" role="status"></p>
         </div>
       </details>
     </section>
@@ -373,8 +468,8 @@ dialog[open] { translate: 0 0; }
         <h2 id="dialog-title">保存备注</h2>
         <p>将当前备注添加到学习资料。</p>
         <form method="dialog" class="row">
-          <button type="submit" autofocus>取消</button>
-          <button type="submit" class="primary">保存</button>
+          <button type="submit" value="cancel" autofocus>取消</button>
+          <button type="submit" value="save" class="primary">保存</button>
         </form>
       </dialog>
     </section>
@@ -419,7 +514,14 @@ themeButton.onclick = () => {
   applyTheme(dark);
   try { localStorage.setItem('guangmo-theme', dark ? 'dark' : 'light'); } catch {}
 };
-document.querySelector('#show-dialog').onclick = () => document.querySelector('#example-dialog').showModal();
+const exampleDialog = document.querySelector('#example-dialog');
+document.querySelector('#show-dialog').onclick = () => {
+  exampleDialog.returnValue = '';
+  exampleDialog.showModal();
+};
+exampleDialog.addEventListener('close', () => {
+  if (exampleDialog.returnValue === 'save') showNotice('示例备注已保存');
+});
 const favorite = document.querySelector('#favorite');
 favorite.onclick = () => {
   const selected = favorite.getAttribute('aria-pressed') === 'false';
@@ -435,6 +537,14 @@ volume.oninput = () => {
 };
 
 const tabs = [...document.querySelectorAll('[role=tab]')];
+function updateTabIndicator() {
+  const selected = tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
+  const tablist = selected.closest('[role=tablist]');
+  tablist.style.setProperty('--tab-x', selected.offsetLeft + 'px');
+  tablist.style.setProperty('--tab-y', selected.offsetTop + 'px');
+  tablist.style.setProperty('--tab-width', selected.offsetWidth + 'px');
+  tablist.style.setProperty('--tab-height', selected.offsetHeight + 'px');
+}
 function selectTab(selected) {
   for (const tab of tabs) {
     const active = tab === selected;
@@ -442,32 +552,49 @@ function selectTab(selected) {
     tab.tabIndex = active ? 0 : -1;
     document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
   }
+  updateTabIndicator();
 }
+updateTabIndicator();
+const tabResizeObserver = new ResizeObserver(updateTabIndicator);
+tabResizeObserver.observe(tabs[0].closest('[role=tablist]'));
+tabs.forEach(tab => tabResizeObserver.observe(tab));
 for (const tab of tabs) {
   tab.onclick = () => selectTab(tab);
   tab.onkeydown = (event) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
-    const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs.at(-1) : tabs.find(other => other !== tab);
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs.at(-1) : tabs[(tabs.indexOf(tab) + direction + tabs.length) % tabs.length];
     selectTab(next);
     next.focus();
   };
 }
 
 for (const item of document.querySelectorAll('[data-message]')) {
-  item.onclick = () => { document.querySelector('#menu-status').textContent = item.dataset.message; };
+  item.onclick = () => {
+    const picker = item.closest('details');
+    picker.open = false;
+    picker.querySelector('summary').focus();
+    showNotice(item.dataset.message);
+  };
 }
 const notice = document.querySelector('#notice');
 let noticeTimer;
-document.querySelector('#show-notice').onclick = () => {
-  notice.textContent = '备注已保存';
+function showNotice(message) {
+  notice.textContent = message;
   notice.classList.add('visible');
   clearTimeout(noticeTimer);
-  noticeTimer = setTimeout(() => {
-    notice.classList.remove('visible');
-    noticeTimer = setTimeout(() => { notice.textContent = ''; }, 180);
-  }, 3000);
-};
+  noticeTimer = setTimeout(hideNotice, 3000);
+}
+function hideNotice() {
+  notice.classList.remove('visible');
+  noticeTimer = setTimeout(() => { notice.textContent = ''; }, 180);
+}
+document.querySelector('#show-notice').onclick = () => showNotice('备注已保存');
+notice.addEventListener('pointerenter', () => clearTimeout(noticeTimer));
+notice.addEventListener('pointerleave', () => {
+  noticeTimer = setTimeout(hideNotice, 3000);
+});
 const detailPicker = document.querySelector('#detail-picker');
 const detailSummary = detailPicker.querySelector('summary');
 const options = detailPicker.querySelectorAll('button');
@@ -484,13 +611,17 @@ for (const option of options) {
 const datePicker = document.querySelector('#date-picker');
 const dateSummary = datePicker.querySelector('summary');
 const calendar = document.querySelector('#calendar');
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+let focusedDate = new Date(today);
 const month = new Date();
+month.setHours(0, 0, 0, 0);
 month.setDate(1);
 const dateFormat = new Intl.DateTimeFormat('zh-CN', {dateStyle: 'long'});
 const monthFormat = new Intl.DateTimeFormat('zh-CN', {year: 'numeric', month: 'long'});
 let selectedDate;
 
-function renderCalendar() {
+function renderCalendar(restoreFocus = false) {
   document.querySelector('#calendar-month').textContent = monthFormat.format(month);
   calendar.replaceChildren();
   for (const weekday of '日一二三四五六') {
@@ -509,6 +640,21 @@ function renderCalendar() {
     button.textContent = day;
     button.setAttribute('aria-label', formatted);
     button.setAttribute('aria-pressed', String(selectedDate === formatted));
+    if (date.getTime() === today.getTime()) button.setAttribute('aria-current', 'date');
+    button.tabIndex = day === focusedDate.getDate() ? 0 : -1;
+    button.addEventListener('focus', () => {
+      focusedDate = new Date(date);
+      for (const other of calendar.querySelectorAll('button')) other.tabIndex = other === button ? 0 : -1;
+    });
+    button.onkeydown = event => {
+      const offsets = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7, Home: -date.getDay(), End: 6 - date.getDay() };
+      if (!(event.key in offsets)) return;
+      event.preventDefault();
+      focusedDate = new Date(date);
+      focusedDate.setDate(date.getDate() + offsets[event.key]);
+      month.setFullYear(focusedDate.getFullYear(), focusedDate.getMonth(), 1);
+      renderCalendar(true);
+    };
     button.onclick = () => {
       selectedDate = formatted;
       dateSummary.textContent = formatted;
@@ -518,29 +664,69 @@ function renderCalendar() {
     };
     calendar.append(button);
   }
+  if (restoreFocus) calendar.querySelector('button[tabindex="0"]')?.focus();
+  positionPicker(datePicker);
 }
-document.querySelector('#previous-month').onclick = () => {
-  month.setMonth(month.getMonth() - 1);
+function changeMonth(offset) {
+  month.setMonth(month.getMonth() + offset);
+  const day = Math.min(focusedDate.getDate(), new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate());
+  focusedDate = new Date(month.getFullYear(), month.getMonth(), day);
   renderCalendar();
-};
-document.querySelector('#next-month').onclick = () => {
-  month.setMonth(month.getMonth() + 1);
-  renderCalendar();
-};
+}
+document.querySelector('#previous-month').onclick = () => changeMonth(-1);
+document.querySelector('#next-month').onclick = () => changeMonth(1);
 renderCalendar();
 
 const pickers = [...document.querySelectorAll('details.picker')];
+function positionPicker(picker) {
+  if (!picker.open) return;
+  const panel = picker.querySelector('.picker-panel');
+  const trigger = picker.querySelector('summary').getBoundingClientRect();
+  const viewport = window.visualViewport;
+  const viewportTop = viewport?.offsetTop ?? 0;
+  const viewportBottom = viewportTop + (viewport?.height ?? window.innerHeight);
+  const below = Math.max(0, viewportBottom - trigger.bottom - 14);
+  const above = Math.max(0, trigger.top - viewportTop - 14);
+  panel.style.removeProperty('--picker-max-height');
+  const opensUp = panel.getBoundingClientRect().height > below && above > below;
+  picker.classList.toggle('opens-up', opensUp);
+  panel.style.setProperty('--picker-max-height', `${opensUp ? above : below}px`);
+}
+let pickerPositionFrame;
+function schedulePickerPosition() {
+  cancelAnimationFrame(pickerPositionFrame);
+  pickerPositionFrame = requestAnimationFrame(() => {
+    for (const picker of pickers) positionPicker(picker);
+  });
+}
+window.addEventListener('resize', schedulePickerPosition);
+window.addEventListener('scroll', schedulePickerPosition, { passive: true });
+window.visualViewport?.addEventListener('resize', schedulePickerPosition);
+window.visualViewport?.addEventListener('scroll', schedulePickerPosition);
 document.addEventListener('click', event => {
   for (const picker of pickers) {
     if (picker.open && !picker.contains(event.target)) picker.open = false;
   }
 });
 for (const picker of pickers) {
+  picker.addEventListener('toggle', () => {
+    if (picker.open) {
+      for (const other of pickers) if (other !== picker) other.open = false;
+      positionPicker(picker);
+    }
+  });
   picker.addEventListener('keydown', event => {
     if (event.key !== 'Escape' || !picker.open) return;
     picker.open = false;
     picker.querySelector('summary').focus();
   });
+}
+for (const tip of document.querySelectorAll('.tip')) {
+  tip.addEventListener('keydown', event => {
+    if (event.key === 'Escape') tip.classList.add('dismissed');
+  });
+  tip.addEventListener('pointerleave', () => tip.classList.remove('dismissed'));
+  tip.addEventListener('focusout', () => tip.classList.remove('dismissed'));
 }
 </script>
 </html>
