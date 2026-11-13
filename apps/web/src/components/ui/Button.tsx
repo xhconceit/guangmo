@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef } from "react";
 type ButtonProps = ComponentPropsWithoutRef<"button"> & {
   variant?: "primary" | "ghost" | "soft";
   size?: "sm" | "md";
+  shape?: "rounded" | "pill";
 };
 
 const variantClasses = {
@@ -20,6 +21,7 @@ const sizeClasses = {
 export function Button({
   variant = "primary",
   size = "md",
+  shape = "rounded",
   type = "button",
   className,
   children,
@@ -29,9 +31,11 @@ export function Button({
     <button
       {...props}
       type={type}
+      data-corner={shape === "pill" ? "round" : undefined}
       className={[
-        "inline-flex items-center justify-center gap-2",
-        "m-0 rounded-control border-0",
+        "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap",
+        "m-0 border-0",
+        shape === "pill" ? "rounded-full" : "rounded-control",
         "transition-colors",
         "enabled:cursor-pointer",
         "disabled:cursor-not-allowed disabled:opacity-50",
