@@ -44,14 +44,13 @@ main:has(#today.active) .topbar {
   padding: 22px 18px 16px;
   border: 1px solid var(--line);
   border-radius: 28px;
-  background: var(--surface);
-  box-shadow: 0 8px 32px #25203508, 0 1px 4px #25203505;
+  background: var(--input);
+  box-shadow: var(--frame-shadow);
   transition: border-color .18s ease, background-color .18s ease;
 }
 
 #today .new-composer:focus-within {
-  border-color: color-mix(in srgb, #a995dc 40%, var(--line));
-  box-shadow: 0 8px 32px #62518c0c, 0 0 0 2px #a995dc0a;
+  border-color: var(--input-line);
 }
 
 #today .new-composer textarea {
@@ -87,22 +86,6 @@ main:has(#today.active) .topbar {
   height: 36px;
   border-radius: 999px;
   corner-shape: round;
-  background: linear-gradient(135deg, #ebc8ae 0%, #c18af0 35%, #9a8af0 70%, #b9b2fb 100%);
-  color: #fff;
-}
-
-#today .send:not(:disabled):hover {
-  background: linear-gradient(135deg, #e8b998 0%, #b97ce8 35%, #8c7ce0 70%, #a89aef 100%);
-  opacity: 1;
-}
-
-#today .send:disabled {
-  opacity: .45;
-}
-
-.theme-dark #today .new-composer {
-  background: var(--input);
-  box-shadow: 0 8px 32px #00000020;
 }
 
 .theme-dark #today .attach-button,

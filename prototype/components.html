@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>组件库 · 广莫</title>
+<link rel="stylesheet" href="./theme.css">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--text); font: 15px/1.6 system-ui, sans-serif; }
+header, main { max-width: 560px; margin: auto; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; gap: 16px; }
+header a { color: var(--secondary); text-decoration: none; }
+header a:hover { color: var(--text); }
+#theme { background: transparent; border-color: transparent; }
+#theme:hover { background: var(--hover); }
+main { padding: 18px 24px 40px; }
+h1 { margin: 0 0 16px; font-size: 28px; font-weight: 650; letter-spacing: -.045em; }
+.samples { display: grid; gap: 24px; }
+h2 { font-size: 14px; font-weight: 600; margin: 0 0 8px; }
+.preview { max-width: 380px; }
+.row:not([hidden]) { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { padding: 7px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--hover); cursor: pointer; }
+button:hover { background: var(--selected); }
+.primary { background: var(--strong); border-color: var(--strong); color: var(--on-strong); }
+.primary:hover { background: var(--strong); opacity: .85; }
+.secondary {
+  padding: 4px 10px;
+  border-color: transparent;
+  border-radius: 11px;
+  background: var(--hover);
+  font-size: 13px;
+  line-height: 18px;
+  corner-shape: round;
+}
+.secondary:hover { background: var(--selected); }
+.ghost { border-color: transparent; background: transparent; }
+button:disabled { background: var(--selected); color: var(--muted); cursor: default; }
+.icon { width: 40px; padding-inline: 0; font-size: 18px; line-height: 1.4; }
+.icon[aria-pressed=true] { background: var(--selected); border-color: var(--input-line); }
+.field-label { width: 100%; }
+.field:disabled { background: var(--panel); color: var(--muted); }
+.hint { display: block; margin: 0; font-size: 12px; color: var(--secondary); }
+[role=tablist] { display: inline-flex; padding: 3px; gap: 2px; border-radius: 13px; background: var(--hover); }
+[role=tab] { border-color: transparent; background: transparent; padding: 5px 14px; }
+[role=tab][aria-selected=true] { background: var(--surface); box-shadow: var(--frame-shadow); }
+progress { width: min(220px, 70%); height: 8px; }
+label { display: grid; gap: 5px; font-size: 14px; }
+.field { width: 100%; padding: 8px 10px; border: 1px solid transparent; border-radius: 12px; background: var(--panel); }
+.field:focus { outline: none; border-color: var(--focus); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+::placeholder { color: var(--muted); opacity: 1; }
+textarea { resize: vertical; }
+input, progress { accent-color: var(--strong); }
+.switch { display: inline-flex; align-items: center; gap: 8px; }
+.switch input {
+  appearance: none;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--selected);
+  cursor: pointer;
+}
+.switch input::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 3px;
+  border-radius: 50%;
+  background: var(--text);
+}
+.switch input:checked { background: var(--strong); }
+.switch input:checked::before { transform: translateX(14px); background: var(--on-strong); }
+[role=tabpanel], output { color: var(--secondary); font-size: 14px; }
+[role=tabpanel]:not([hidden]) { margin-top: 8px; }
+summary { cursor: pointer; }
+details ul { list-style: none; padding: 0; margin: 8px 0 0; }
+details li + li { margin-top: 4px; }
+.tip { position: relative; display: inline-block; }
+.tip [role=tooltip] {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+  border-radius: 10px;
+  padding: 4px 8px;
+  background: var(--strong);
+  color: var(--on-strong);
+  font-size: 13px;
+}
+.tip:hover [role=tooltip], .tip:focus-within [role=tooltip] { display: block; }
+#notice { position: fixed; z-index: 5; right: 24px; bottom: 24px; margin: 0; font-size: 14px; }
+#notice:not(:empty) { padding: 10px 16px; border-radius: 14px; background: var(--strong); color: var(--on-strong); box-shadow: var(--popup-shadow); }
+#menu-picker { width: fit-content; }
+#menu-picker .picker-panel { min-width: 140px; }
+#menu-picker ul, #menu-status { margin: 0; }
+#menu-status:not(:empty) { margin-top: 6px; }
+#menu-picker li button { width: 100%; text-align: left; }
+dialog { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--text); max-width: min(420px, calc(100% - 32px)); box-shadow: var(--popup-shadow); }
+dialog::backdrop { background: color-mix(in srgb, var(--outer) 60%, transparent); }
+dialog p { color: var(--secondary); }
+@media (max-width: 560px) {
+  header { padding-inline: 16px; }
+  main { padding-inline: 12px; }
+}
+button, .field {
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 140ms ease;
+}
+.switch input { transition: background-color 180ms ease; }
+.switch input::before { transition: transform 180ms ease, background-color 180ms ease; }
+input:is([type=checkbox]:not([role=switch]), [type=radio]) {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  border: 1px solid var(--focus);
+  border-radius: 7px;
+  background: var(--input);
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+input[type=radio] { border-radius: 50%; }
+input:is([type=checkbox]:not([role=switch]), [type=radio]):checked {
+  background: var(--strong);
+  border-color: var(--strong);
+}
+input:is([type=checkbox]:not([role=switch]), [type=radio])::before {
+  content: "";
+  width: 7px;
+  height: 4px;
+  border: solid var(--on-strong);
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+input[type=radio]::before {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--on-strong);
+}
+input:is([type=checkbox]:not([role=switch]), [type=radio]):checked::before {
+  opacity: 1;
+}
+input:disabled { opacity: .55; cursor: default; }
+#volume {
+  appearance: none;
+  width: min(220px, 70%);
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--strong) var(--fill), var(--selected) var(--fill));
+  cursor: pointer;
+}
+#volume::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--strong);
+  transition: transform 150ms ease;
+}
+#volume::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--strong);
+  transition: transform 150ms ease;
+}
+details.picker { position: relative; max-width: 380px; }
+.picker summary { list-style: none; }
+.picker summary::-webkit-details-marker { display: none; }
+.picker summary::after { content: '⌄'; float: right; }
+.picker-panel { position: absolute; z-index: 3; inset: calc(100% + 6px) 0 auto; box-shadow: var(--popup-shadow); padding: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; }
+.calendar button { padding-inline: 0; }
+.calendar [aria-pressed=true], .picker-panel [aria-pressed=true] { background: var(--selected); }
+.calendar-nav { justify-content: space-between; margin-bottom: 8px; }
+@keyframes appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+[role=tabpanel]:not([hidden]),
+.tip:hover [role=tooltip], .tip:focus-within [role=tooltip] {
+  animation: appear 180ms ease-out both;
+}
+dialog, dialog::backdrop {
+  opacity: 0;
+  transition: opacity 180ms ease, display 180ms allow-discrete,
+    overlay 180ms allow-discrete, content-visibility 180ms allow-discrete;
+}
+dialog {
+  translate: 0 5px;
+  transition-property: opacity, translate, display, overlay, content-visibility;
+  transition-behavior: allow-discrete;
+}
+dialog[open], dialog[open]::backdrop { opacity: 1; }
+dialog[open] { translate: 0 0; }
+@starting-style {
+  dialog[open], dialog[open]::backdrop { opacity: 0; }
+  dialog[open] { translate: 0 5px; }
+}
+.picker::details-content {
+  opacity: 0;
+  transition: opacity 180ms ease, content-visibility 180ms allow-discrete;
+}
+.picker[open]::details-content { opacity: 1; }
+@starting-style {
+  .picker[open]::details-content { opacity: 0; }
+}
+#notice { opacity: 0; translate: 0 5px; pointer-events: none; transition: opacity 180ms ease, translate 180ms ease; }
+#notice.visible { opacity: 1; translate: 0 0; }
+.sample-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14px; }
+.sample-table th, .sample-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.sample-table tbody tr:last-child td { border-bottom: 0; }
+.sample-table th { background: var(--panel); color: var(--secondary); font-weight: 600; }
+.sample-table tbody tr { transition: background-color 160ms ease; }
+.sample-table tbody tr:hover { background: var(--panel); }
+.sample-table.compact { font-size: 12px; }
+.sample-table.compact :is(th, td) { padding: 10px; }
+.table-caption { display: block; margin-top: 6px; color: var(--secondary); font-size: 12px; }
+.table-caption + .sample-table { margin-top: 16px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+.size-row { margin-top: 10px; }
+.size-example { display: grid; justify-items: start; gap: 4px; }
+.size-example small { color: var(--secondary); font-size: 12px; }
+.size-example button { min-height: var(--sample-size); padding-block: 0; }
+.size-example .icon { width: var(--sample-size); }
+.size-example .composer-sample { min-height: var(--sample-size); }
+.composer-sizes { display: grid; gap: 8px; max-width: 380px; }
+.composer-sizes .size-example { width: 100%; }
+@supports (corner-shape: squircle) {
+  .picker-panel, .sample-table, dialog,
+  #notice, .tip [role=tooltip], input[type=checkbox]:not([role=switch]) {
+    corner-shape: squircle;
+  }
+}
+</style>
+<header>
+  <a href="./index.html">← 广莫原型</a>
+  <button id="theme" type="button" aria-pressed="false">暗色主题</button>
+</header>
+<main>
+  <h1>组件库</h1>
+  <div class="samples">
+    <section>
+      <h2>按钮</h2>
+      <div class="preview row">
+        <button type="button" class="primary">保存</button>
+        <button type="button" class="secondary">预览</button>
+        <button type="button" class="ghost">取消</button>
+        <button type="button" disabled>不可用</button>
+      </div>
+      <div class="row size-row"><div class="size-example" style="--sample-size: 32px"><button type="button" class="primary">发送</button><small>伴读发送 · 32px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>桌面发送 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="primary">发送</button><small>移动端发送 · 44px</small></div></div>
+    </section>
+    <section>
+      <h2>图标按钮</h2>
+      <div class="row">
+        <button type="button" class="icon" title="添加" aria-label="添加">＋</button>
+        <button type="button" class="icon ghost" id="favorite" aria-label="收藏" aria-pressed="false">☆</button>
+        <button type="button" class="icon" aria-label="移除" disabled>−</button>
+      </div>
+      <div class="row size-row"><div class="size-example" style="--sample-size: 32px"><button type="button" class="icon" aria-label="关闭示例">×</button><small>关闭 · 32px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="icon" aria-label="添加附件示例">＋</button><small>桌面附件 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="icon" aria-label="添加附件示例">＋</button><small>移动端附件 · 44px</small></div></div>
+    </section>
+    <section>
+      <h2>复选框</h2>
+      <div class="preview row">
+        <label class="row"><input type="checkbox" checked> 包含已确认的记忆</label>
+        <label class="row"><input type="checkbox" disabled> 包含归档资料</label>
+      </div>
+    </section>
+    <section>
+      <h2>单选框</h2>
+      <div class="row" role="group" aria-label="排序方式">
+        <label class="row"><input type="radio" name="sort" checked> 最近</label>
+        <label class="row"><input type="radio" name="sort"> 名称</label>
+      </div>
+    </section>
+    <section>
+      <h2>开关</h2>
+      <label class="switch"><input type="checkbox" role="switch"> 桌面通知</label>
+    </section>
+    <section>
+      <h2>下拉选择</h2>
+      <details class="picker" id="detail-picker">
+        <summary class="field" aria-label="内容详略：简明">简明</summary>
+        <div class="picker-panel row">
+          <button type="button" aria-pressed="true">简明</button>
+          <button type="button" aria-pressed="false">详细</button>
+        </div>
+      </details>
+    </section>
+    <section>
+      <h2>滑块</h2>
+      <div class="row"><input id="volume" style="--fill: 60%" type="range" aria-label="音量" value="60"><output for="volume" id="volume-value">60%</output></div>
+    </section>
+    <section>
+      <h2>单行输入框</h2>
+      <div class="preview row">
+        <label class="field-label">资料标题<input class="field" placeholder="例如：阅读笔记" aria-describedby="title-hint"></label>
+        <p class="hint" id="title-hint">用于在资料列表中识别这份文档</p>
+        <input class="field" aria-label="资料来源" value="来源由系统填写" disabled>
+      </div>
+    </section>
+    <section>
+      <h2>多行输入框</h2>
+      <div class="preview"><textarea class="field" rows="3" aria-label="备注" placeholder="输入备注"></textarea></div>
+      <div class="size-row composer-sizes"><label class="size-example" style="--sample-size: 52px"><textarea class="field composer-sample" rows="1" placeholder="输入消息"></textarea><small>对话中 · 最小高度 52px</small></label><label class="size-example" style="--sample-size: 88px"><textarea class="field composer-sample" rows="1" placeholder="输入消息"></textarea><small>首页空态 · 最小高度 88px</small></label></div>
+    </section>
+    <section>
+      <h2>搜索框</h2>
+      <div class="preview"><input class="field" type="search" aria-label="搜索资料" placeholder="搜索资料"></div>
+    </section>
+    <section>
+      <h2>日期选择器</h2>
+      <details class="picker" id="date-picker">
+        <summary class="field">选择日期</summary>
+        <div class="picker-panel">
+          <div class="row calendar-nav">
+            <button type="button" id="previous-month" aria-label="上个月">‹</button>
+            <strong id="calendar-month" aria-live="polite"></strong>
+            <button type="button" id="next-month" aria-label="下个月">›</button>
+          </div>
+          <div class="calendar" id="calendar"></div>
+        </div>
+      </details>
+    </section>
+    <section>
+      <h2>标签页</h2>
+      <div class="row" role="tablist" aria-label="资料视图">
+        <button type="button" role="tab" id="overview-tab" aria-selected="true" aria-controls="overview">概览</button>
+        <button type="button" role="tab" id="notes-tab" aria-selected="false" aria-controls="notes" tabindex="-1">笔记</button>
+      </div>
+      <div id="overview" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">共 3 份学习资料</div>
+      <div id="notes" role="tabpanel" aria-labelledby="notes-tab" tabindex="0" hidden>暂无笔记</div>
+    </section>
+    <section>
+      <h2>菜单</h2>
+      <details class="picker" id="menu-picker">
+        <summary class="field">更多操作</summary>
+        <div class="picker-panel">
+          <ul>
+          <li><button type="button" data-message="已选择重命名">重命名</button></li>
+          <li><button type="button" data-message="已选择归档">归档</button></li>
+          </ul>
+          <p id="menu-status" role="status"></p>
+        </div>
+      </details>
+    </section>
+    <section>
+      <h2>工具提示</h2>
+      <span class="tip"><button type="button" class="icon" aria-label="帮助" aria-describedby="help-tip">?</button><span role="tooltip" id="help-tip">只有你能看到这份资料</span></span>
+    </section>
+    <section>
+      <h2>弹窗</h2>
+      <div class="preview row"><button type="button" id="show-dialog">打开示例</button></div>
+      <dialog id="example-dialog" aria-labelledby="dialog-title">
+        <h2 id="dialog-title">保存备注</h2>
+        <p>将当前备注添加到学习资料。</p>
+        <form method="dialog" class="row">
+          <button type="submit" autofocus>取消</button>
+          <button type="submit" class="primary">保存</button>
+        </form>
+      </dialog>
+    </section>
+    <section>
+      <h2>消息提示</h2>
+      <div class="row"><button type="button" id="show-notice">显示提示</button><p id="notice" role="status"></p></div>
+    </section>
+    <section>
+      <h2>表格</h2>
+      <table class="sample-table" aria-label="常规资料表">
+        <thead><tr><th scope="col">资料</th><th scope="col">类型</th><th scope="col">状态</th></tr></thead>
+        <tbody>
+          <tr><td>阅读笔记</td><td>文本</td><td>已完成</td></tr>
+          <tr><td>学习提纲</td><td>文档</td><td>待整理</td></tr>
+        </tbody>
+      </table>
+      <small class="table-caption">常规</small>
+      <table class="sample-table compact" aria-label="紧凑资料表">
+        <thead><tr><th scope="col">资料</th><th scope="col">类型</th><th scope="col">状态</th></tr></thead>
+        <tbody>
+          <tr><td>阅读笔记</td><td>文本</td><td>已完成</td></tr>
+          <tr><td>学习提纲</td><td>文档</td><td>待整理</td></tr>
+        </tbody>
+      </table>
+      <small class="table-caption">紧凑</small>
+    </section>
+    <section>
+      <h2>进度条</h2>
+      <div class="row"><progress aria-label="学习进度" max="100" value="65"></progress><span>65%</span></div>
+    </section>
+  </div>
+</main>
+<script>
+const themeButton = document.querySelector('#theme');
+function applyTheme(dark) {
+  document.documentElement.classList.toggle('theme-dark', dark);
+  themeButton.setAttribute('aria-pressed', String(dark));
+}
+try { applyTheme(localStorage.getItem('guangmo-theme') === 'dark'); } catch {}
+themeButton.onclick = () => {
+  const dark = !document.documentElement.classList.contains('theme-dark');
+  applyTheme(dark);
+  try { localStorage.setItem('guangmo-theme', dark ? 'dark' : 'light'); } catch {}
+};
+document.querySelector('#show-dialog').onclick = () => document.querySelector('#example-dialog').showModal();
+const favorite = document.querySelector('#favorite');
+favorite.onclick = () => {
+  const selected = favorite.getAttribute('aria-pressed') === 'false';
+  favorite.setAttribute('aria-pressed', String(selected));
+  favorite.textContent = selected ? '★' : '☆';
+};
+
+const volume = document.querySelector('#volume');
+volume.oninput = () => {
+  const percentage = volume.value + '%';
+  volume.style.setProperty('--fill', percentage);
+  document.querySelector('#volume-value').value = percentage;
+};
+
+const tabs = [...document.querySelectorAll('[role=tab]')];
+function selectTab(selected) {
+  for (const tab of tabs) {
+    const active = tab === selected;
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+  }
+}
+for (const tab of tabs) {
+  tab.onclick = () => selectTab(tab);
+  tab.onkeydown = (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs.at(-1) : tabs.find(other => other !== tab);
+    selectTab(next);
+    next.focus();
+  };
+}
+
+for (const item of document.querySelectorAll('[data-message]')) {
+  item.onclick = () => { document.querySelector('#menu-status').textContent = item.dataset.message; };
+}
+const notice = document.querySelector('#notice');
+let noticeTimer;
+document.querySelector('#show-notice').onclick = () => {
+  notice.textContent = '备注已保存';
+  notice.classList.add('visible');
+  clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(() => {
+    notice.classList.remove('visible');
+    noticeTimer = setTimeout(() => { notice.textContent = ''; }, 180);
+  }, 3000);
+};
+const detailPicker = document.querySelector('#detail-picker');
+const detailSummary = detailPicker.querySelector('summary');
+const options = detailPicker.querySelectorAll('button');
+for (const option of options) {
+  option.onclick = () => {
+    for (const button of options) button.setAttribute('aria-pressed', String(button === option));
+    detailSummary.textContent = option.textContent;
+    detailSummary.setAttribute('aria-label', '内容详略：' + option.textContent);
+    detailPicker.open = false;
+    detailSummary.focus();
+  };
+}
+
+const datePicker = document.querySelector('#date-picker');
+const dateSummary = datePicker.querySelector('summary');
+const calendar = document.querySelector('#calendar');
+const month = new Date();
+month.setDate(1);
+const dateFormat = new Intl.DateTimeFormat('zh-CN', {dateStyle: 'long'});
+const monthFormat = new Intl.DateTimeFormat('zh-CN', {year: 'numeric', month: 'long'});
+let selectedDate;
+
+function renderCalendar() {
+  document.querySelector('#calendar-month').textContent = monthFormat.format(month);
+  calendar.replaceChildren();
+  for (const weekday of '日一二三四五六') {
+    const label = document.createElement('span');
+    label.textContent = weekday;
+    calendar.append(label);
+  }
+  for (let index = 0; index < month.getDay(); index++) calendar.append(document.createElement('span'));
+  const lastDay = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+  for (let day = 1; day <= lastDay; day++) {
+    const date = new Date(month);
+    date.setDate(day);
+    const formatted = dateFormat.format(date);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = day;
+    button.setAttribute('aria-label', formatted);
+    button.setAttribute('aria-pressed', String(selectedDate === formatted));
+    button.onclick = () => {
+      selectedDate = formatted;
+      dateSummary.textContent = formatted;
+      datePicker.open = false;
+      dateSummary.focus();
+      renderCalendar();
+    };
+    calendar.append(button);
+  }
+}
+document.querySelector('#previous-month').onclick = () => {
+  month.setMonth(month.getMonth() - 1);
+  renderCalendar();
+};
+document.querySelector('#next-month').onclick = () => {
+  month.setMonth(month.getMonth() + 1);
+  renderCalendar();
+};
+renderCalendar();
+
+const pickers = [...document.querySelectorAll('details.picker')];
+document.addEventListener('click', event => {
+  for (const picker of pickers) {
+    if (picker.open && !picker.contains(event.target)) picker.open = false;
+  }
+});
+for (const picker of pickers) {
+  picker.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !picker.open) return;
+    picker.open = false;
+    picker.querySelector('summary').focus();
+  });
+}
+</script>
+</html>
