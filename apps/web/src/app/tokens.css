@@ -2,6 +2,11 @@
   /* 浏览器按浅色绘制原生控件和滚动条。 */
   color-scheme: light;
 
+  /* 字体 */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+
   /* 颜色：按用途命名，组件不直接依赖具体色值 */
   /* surface 是主内容区底色，outer 是面板之间露出的页面底色。 */
   --surface: #ffffff;
@@ -27,11 +32,6 @@
   --focus: #737373;
 
   --popup-shadow: 0 8px 28px #00000012;
-
-  /* 字体 */
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Microsoft YaHei", sans-serif;
 
   /* 间距尺度 */
   --space-1: 4px;

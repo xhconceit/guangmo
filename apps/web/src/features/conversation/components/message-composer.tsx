@@ -24,6 +24,7 @@ export function MessageComposer({
     }}
   >
     <Textarea
+      autoResize
       className="flex-1"
       aria-label="信息内容"
       placeholder="输入信息..."
