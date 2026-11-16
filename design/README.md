@@ -2,7 +2,7 @@
 
 正式 Logo：[guangmo-logo-river.svg](guangmo-logo-river.svg)。
 
-河流形态的连续曲线是广莫的正式品牌标志。原型的侧栏、首页标志与 favicon 统一使用此 SVG。
+河流形态的连续曲线是广莫的正式品牌标志。界面中的品牌展示遵循[设计规范](design-system.md)，不以资源存在代表各处已接入。
 
 - 格式：SVG 矢量。
 - 画布：`512 × 512`，透明背景。
