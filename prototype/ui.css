@@ -1,0 +1,198 @@
+/* Shared prototype UI. Page/demo layout is isolated in the lower prototype layer. */
+/* Hidden is a behavioral state, not a component appearance. It must beat flex/grid display rules. */
+[hidden] { display: none !important; }
+body { font: var(--weight-regular) var(--text-body)/var(--leading-standard) var(--font-sans); }
+*, *::before, *::after { box-sizing: border-box; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
+h1, .greeting h1, #learning h1 { font: var(--weight-semibold) var(--text-page-title)/var(--leading-title) var(--font-sans); }
+h2, h3, #learning h2, .secondary-panel h2, .lab-head h2, .study-note h3 { font: var(--weight-semibold) var(--text-section-title)/var(--leading-standard) var(--font-sans); }
+#today .welcome h1 { font: var(--weight-medium) var(--text-welcome)/var(--leading-title) var(--font-sans); }
+p, .chat-result, .study-paper p, .study-message, .lab-message, .lab-output, .lab-source-preview,
+.study-note p, .knowledge-card p, .subtitle, .secondary-panel p, .study-empty, .study-guide,
+.lab-overview p, dialog p { font: var(--weight-regular) var(--text-body)/var(--leading-reading) var(--font-sans); }
+.study-paper h2 { font: var(--weight-semibold) var(--text-page-title)/var(--leading-title) var(--font-sans); }
+button, summary, label, .history-items button, .history-new-chat, .study-button,
+.study-tabs button, .lab-switch button, .lab-source button, .lab-prompts button,
+.lab-tile, .lab-artifact, .lab-answer, .study-passage button, .picker-options button,
+#detail-picker .picker-options button, #menu-picker li button, .calendar button,
+#study-welcome .study-tools button, .study-message button, .knowledge-actions button,
+.study-composer .primary, .study-selection .study-button {
+  font: var(--weight-medium) var(--text-control)/var(--leading-standard) var(--font-sans);
+}
+small, .hint, .eyebrow, .footer, .message-author, .study-meta, .study-tag,
+.study-status, .lab-small, .lab-source small, .lab-artifact small, .history-label,
+.table-caption, .calendar > span, #attachment-label, #lab-notice, #knowledge-summary,
+#knowledge-status, #study-save-status, #study-reference-status, .study-heading p,
+#today .welcome p, .study-message .message-author, .study-guide::before {
+  font: var(--weight-regular) var(--text-caption)/var(--leading-standard) var(--font-sans);
+}
+button { min-height: var(--control-compact); border-radius: var(--radius-button); }
+button, a, input, textarea, select, summary, .workspace-sidebar nav a::before {
+  transition: color var(--duration-color), background-color var(--duration-color), border-color var(--duration-color);
+}
+input:not([type=checkbox], [type=radio], [type=range], [type=file]), textarea, select, .field,
+.new-composer textarea, #today .new-composer textarea, .study-composer textarea,
+.lab-compose textarea, .knowledge-controls select, .knowledge-card select, #detail-picker > summary {
+  font: var(--weight-regular) var(--text-input)/var(--leading-standard) var(--font-sans);
+  background: var(--input); color: var(--text);
+  border-radius: var(--radius-round);
+}
+textarea, textarea.field, .lab-dialog textarea, #study-note-dialog textarea {
+  border-radius: var(--radius-composer); padding: var(--space-4); min-height: 112px; box-shadow: var(--frame-shadow);
+}
+.new-composer textarea, #today .new-composer textarea, .study-composer textarea, .lab-compose textarea {
+  border-radius: 0; background: transparent; padding: 0; min-height: 64px; box-shadow: none;
+}
+.new-composer, #today .new-composer, .study-composer form, .lab-compose, .composer-sample {
+  background: var(--input); border: var(--border-width) solid var(--input-line);
+  border-radius: var(--radius-composer); box-shadow: var(--frame-shadow); padding: var(--space-4);
+}
+.lab-compose { margin: var(--space-3); }
+.new-composer:focus-within, #today .new-composer:focus-within, .study-composer form:focus-within, .lab-compose:focus-within {
+  border-color: var(--focus); outline: var(--focus-width) solid var(--focus); outline-offset: 2px; box-shadow: var(--frame-shadow);
+}
+:where(button, a, input, textarea, select, summary, [tabindex]):focus-visible,
+input.field:focus, textarea.field:focus {
+  outline: var(--focus-width) solid var(--focus); outline-offset: 2px; box-shadow: none;
+}
+.new-composer textarea:focus-visible, .study-composer textarea:focus-visible, .lab-compose textarea:focus-visible { outline: none; }
+::placeholder { color: var(--muted); opacity: 1; }
+button:not(:disabled):active, summary:active, .workspace-sidebar nav a:active::before {
+  background: var(--pressed-bg); color: var(--text); opacity: 1;
+}
+.primary:not(:disabled):active, .send:not(:disabled):active, #study-mark-save:not(:disabled):active {
+  background: var(--pressed-strong-bg); color: var(--on-strong);
+}
+button:disabled, input:disabled, textarea:disabled, select:disabled, .field:disabled,
+.send:disabled, .study-button:disabled {
+  color: var(--disabled-foreground); opacity: 1; cursor: default;
+  border-color: var(--disabled-border);
+}
+button:disabled, .field:disabled, .send:disabled, input:disabled, textarea:disabled, select:disabled { background: var(--disabled-bg); }
+:is(.ghost, .quiet, .study-button, .icon-button, .lab-source button, .history-new-chat):disabled { background: transparent; }
+.avatar { background: var(--avatar-bg); color: var(--secondary); }
+.new-conversation, .secondary { background: var(--soft-bg); color: var(--secondary); }
+.study-passage.is-cited { background: var(--reference-highlight-bg); color: var(--text); }
+#chat-error, .theme-dark #chat-error { color: var(--text); }
+.app { gap: var(--panel-gap); }
+.chat-home, #today .chat-home:not(.has-messages) { max-width: var(--conversation-width); }
+.page:not(#today):not(#learning) { max-width: var(--content-width); }
+.sidebar-compact .workspace-sidebar nav a::before { border-radius: var(--radius-nav); }
+#theme-toggle { width: var(--control-touch); height: var(--control-touch); flex-shrink: 0; }
+.icon-button, .attach-button, .history-header .history-close { width: var(--control-compact); height: var(--control-compact); }
+.history-items button, .history-new-chat, .picker-options button, #menu-picker li button, .study-outline button {
+  min-height: var(--list-single); padding: var(--space-2) var(--space-3); white-space: normal; overflow-wrap: anywhere;
+}
+.history-label { padding-inline: var(--space-3); }
+.lab-source, .lab-artifact { min-height: var(--list-multiline); padding-inline: var(--space-3); }
+#today .prompt-options button { border: 0; background: transparent; padding: var(--space-2) var(--space-3); font-size: var(--text-control); }
+#today .prompt-options button:hover { background: var(--hover); }
+#today .prompt-options { gap: var(--space-2); margin-top: var(--space-4); }
+.study-tabs, .lab-switch, .tab-switch { background: var(--hover); border-radius: var(--radius-md); }
+.study-tabs button[aria-pressed=true], .lab-switch button[aria-pressed=true], .tab-switch::before {
+  background: var(--surface); box-shadow: var(--frame-shadow);
+}
+.study-tabs button[aria-pressed=true], .lab-switch button[aria-pressed=true] { color: var(--text); }
+.study-button[aria-pressed=true] { background: var(--selected); color: var(--text); }
+dialog, #context-menu, .picker-panel, #detail-picker > .picker-panel {
+  background: var(--popup-bg); color: var(--text); border-radius: var(--radius-md); box-shadow: var(--popup-shadow);
+}
+@keyframes popup-fade { from { opacity: 0; } to { opacity: 1; } }
+#context-menu:not([hidden]), .picker[open] > .picker-panel, .tip:hover [role=tooltip], .tip:focus-within [role=tooltip] {
+  animation: popup-fade var(--duration-popup) var(--ease-popup);
+}
+dialog, dialog::backdrop { opacity: 0; translate: none; transition: opacity var(--duration-popup) var(--ease-popup), display var(--duration-popup) allow-discrete, overlay var(--duration-popup) allow-discrete; }
+dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
+@starting-style { dialog[open], dialog[open]::backdrop { opacity: 0; translate: none; } }
+/* Progressive fade-out for popovers whose visibility uses hidden/details. */
+@supports (transition-behavior: allow-discrete) {
+  #context-menu, .picker-panel { transition: opacity var(--duration-popup) var(--ease-popup), display var(--duration-popup) allow-discrete; }
+  #context-menu[hidden], .picker:not([open]) > .picker-panel { opacity: 0; }
+  @starting-style { #context-menu:not([hidden]), .picker[open] > .picker-panel { opacity: 0; } }
+}
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { z-index: 1; }
+@supports (corner-shape: squircle) {
+  *, *::before, *::after { corner-shape: var(--corner-shape); }
+  .avatar, .send, .pill, .icon.circle, .prompt-options button, .switch input, .switch input::before,
+  input:not([type=checkbox], [type=range]), select, .picker summary, .calendar button, .calendar-nav button,
+  input[type=radio]::before, .calendar [aria-current=date]::after, #today .attach-button, #today .context-button { corner-shape: round; }
+}
+.component-gallery header, .component-gallery main { max-width: var(--content-width); padding-inline: var(--page-inset); }
+.component-gallery .secondary { border-radius: var(--radius-button); }
+.component-gallery .field { border: var(--border-width) solid var(--input-line); }
+.component-gallery .tab-switch::before { transition: none; border-radius: var(--radius-button); }
+.component-gallery .picker summary::after { content: "\e136"; width: 12px; height: 12px; font: 12px/1 "Phosphor"; color: var(--secondary); background: none; mask: none; }
+.component-gallery .picker[open] > summary::after { transform: translateY(-50%); }
+.component-gallery .picker-options button::after { content: "\e184"; width: 18px; height: 18px; font: 18px/1 "Phosphor"; border: 0; transform: none; background: none; mask: none; }
+.component-gallery .calendar { gap: var(--space-1); }
+.component-gallery .calendar button, .component-gallery .calendar-nav button { width: var(--control-compact); height: var(--control-compact); }
+.component-gallery #date-picker { width: 340px; }
+.component-gallery #date-picker > .picker-panel { width: 100%; padding: var(--space-2); }
+.component-gallery .size-example button { min-height: max(var(--control-compact), var(--sample-size)); }
+@media (width < 640px) {
+  h1, .greeting h1, #learning h1, .study-paper h2 { font-size: var(--text-page-title-mobile); }
+  #today .welcome h1 { font-size: var(--text-welcome-mobile); }
+  .has-messages .new-composer { margin-bottom: var(--space-4); }
+  #today .chat-home.has-messages { padding-bottom: env(safe-area-inset-bottom, var(--space-1)); }
+}
+@media (pointer: coarse) {
+  button, summary, .study-button, .study-tabs button, .lab-switch button, .history-items button,
+  .history-new-chat, .study-passage button, .study-citation, .study-composer .primary,
+  #today .attach-button, #today .context-button, #today .send, .picker-options button,
+  #detail-picker .picker-options button, .component-gallery .size-example button { min-height: var(--control-touch); }
+  .icon-button, .icon, .attach-button, .history-header .history-close, #today .attach-button,
+  .component-gallery .calendar-nav button { min-width: var(--control-touch); height: var(--control-touch); }
+  .component-gallery .calendar button { width: 100%; min-width: 0; height: var(--control-touch); }
+  .study-passage { padding-bottom: var(--space-7); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+/* The component gallery uses the same persistent rail and theme access. */
+.component-gallery { background: var(--outer); padding: var(--frame-gap); padding-left: calc(var(--frame-gap) + var(--rail-width) + var(--panel-gap)); min-height: 100dvh; }
+.component-gallery > header, .component-gallery > main { background: var(--surface); max-width: none; margin: 0; }
+.component-gallery > header { border-radius: var(--radius-panel) var(--radius-panel) 0 0; height: var(--header-height); }
+.component-gallery > main { border-radius: 0 0 var(--radius-panel) var(--radius-panel); min-height: calc(100dvh - var(--header-height) - var(--frame-gap) * 2); }
+.component-gallery .samples, .component-gallery h1 { max-width: var(--content-width); margin-inline: auto; }
+.gallery-rail { position: fixed; left: var(--frame-gap); top: var(--frame-gap); bottom: var(--frame-gap); width: var(--rail-width); padding: var(--space-2) var(--space-1); display: flex; flex-direction: column; background: var(--surface); border-radius: var(--radius-panel); box-shadow: var(--frame-shadow); }
+.gallery-rail nav a, .gallery-rail #theme { display: grid; place-items: center; position: relative; isolation: isolate; width: 44px; height: 44px; color: var(--secondary); border: 0; }
+.gallery-rail nav a::before { content: ''; position: absolute; inset: 4px; z-index: -1; border-radius: var(--radius-nav); }
+.gallery-rail nav a:hover::before { background: var(--hover); }
+.gallery-rail nav a[aria-current]::before { background: var(--selected); }
+.gallery-rail nav a[aria-current], .gallery-rail nav a:hover { color: var(--text); }
+.gallery-rail #theme { margin-top: auto; }
+.gallery-rail .ph-icon { width: 20px; height: 20px; font-size: 20px; }
+.ph-icon { display: inline-block; flex-shrink: 0; width: 18px; height: 18px; font-size: 18px; font-style: normal; line-height: 1; vertical-align: middle; }
+.ph-icon-sun, .star-fill { display: none; }
+.theme-dark .ph-icon-moon, #favorite[aria-pressed=true] .star-regular { display: none; }
+.theme-dark .ph-icon-sun, #favorite[aria-pressed=true] .star-fill { display: inline-block; }
+.component-gallery .secondary:hover, .component-gallery button:not(.primary):not(:disabled):hover { background: var(--hover); }
+.component-gallery button:not(:disabled):active { background: var(--pressed-bg); opacity: 1; }
+.component-gallery .primary:not(:disabled):active { background: var(--pressed-strong-bg); color: var(--on-strong); }
+.component-gallery .icon[aria-pressed=true], .component-gallery .picker-options [aria-pressed=true] { background: var(--selected); }
+.component-gallery .switch input, .component-gallery #volume { background: var(--soft-bg); }
+.component-gallery .switch input:checked { background: var(--strong); }
+.component-gallery #volume { background: linear-gradient(to right, var(--strong) var(--fill), var(--soft-bg) var(--fill)); }
+#lab-send, #study-send, #study-stop { min-width: 88px; }
+/* Explicit icon states remain above the page layout layer. */
+.ph-icon-fill { display: none; }
+.workspace-sidebar nav .ph-icon { width: 20px; height: 20px; font-size: 20px; }
+.workspace-sidebar nav a.active .ph-icon-regular { display: none; }
+.workspace-sidebar nav a.active .ph-icon-fill { display: inline-block; }
+.new-composer textarea::placeholder, .study-composer textarea::placeholder,
+.lab-compose textarea::placeholder, input::placeholder, textarea::placeholder { color: var(--secondary); }
+/* Keep shortcut pills and captions readable at every viewport. */
+#today .prompt-options button { min-height: var(--control-compact); }
+@media (pointer: coarse) { #today .prompt-options button { min-height: var(--control-touch); } }
+blockquote, .study-message blockquote, .study-selection, .knowledge-card blockquote {
+  font: var(--weight-regular) var(--text-body)/var(--leading-reading) var(--font-sans);
+}
+.component-gallery .icon { width: var(--control-compact); height: var(--control-compact); }
+.component-gallery .size-example .icon { width: max(var(--control-compact), var(--sample-size)); height: max(var(--control-compact), var(--sample-size)); }
+@media (pointer: coarse) {
+  .component-gallery .icon, .component-gallery .size-example .icon { width: max(var(--control-touch), var(--sample-size, 0px)); height: max(var(--control-touch), var(--sample-size, 0px)); }
+}
+
+#today .new-composer textarea { max-height: min(240px, 35dvh); }
+
+.context-button .ph-icon { font-size: 12px; }
