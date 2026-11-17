@@ -21,6 +21,7 @@ try {
 </header>
 <main>
   <h1>组件库</h1>
+  <p class="gallery-intro">基础控件、交互状态与尺寸预览</p>
   <div class="samples">
     <section>
       <h2>按钮</h2>
@@ -28,13 +29,13 @@ try {
         <button type="button" class="primary">保存</button>
         <button type="button" class="secondary">预览</button>
         <button type="button" class="ghost">取消</button>
-        <button type="button" disabled>不可用</button>
+        <button type="button" disabled>保存</button>
       </div>
       <div class="row size-row" role="group" aria-label="胶囊按钮示例">
         <div class="size-example" style="--sample-size: 40px"><button type="button" class="primary pill">保存</button><small>胶囊 · 主要</small></div>
         <div class="size-example" style="--sample-size: 28px"><button type="button" class="secondary pill">预览</button><small>胶囊 · 次要</small></div>
       </div>
-      <div class="row size-row"><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>伴读发送 · 32px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>桌面发送 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="primary">发送</button><small>移动端发送 · 44px</small></div></div>
+      <div class="row size-row"><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>伴读发送 · 36px</small></div><div class="size-example" style="--sample-size: 36px"><button type="button" class="primary">发送</button><small>桌面发送 · 36px</small></div><div class="size-example" style="--sample-size: 44px"><button type="button" class="primary">发送</button><small>移动端发送 · 44px</small></div></div>
     </section>
     <section>
       <h2>图标按钮</h2>
@@ -52,8 +53,8 @@ try {
     <section>
       <h2>复选框</h2>
       <div class="preview row">
-        <label class="row"><input type="checkbox" checked> 包含已确认的记忆</label>
-        <label class="row"><input type="checkbox" disabled> 包含归档资料</label>
+        <label class="row"><span class="checkbox-control"><input type="checkbox" checked><i class="ph ph-check" aria-hidden="true"></i></span> 包含已确认的记忆</label>
+        <label class="row"><span class="checkbox-control"><input type="checkbox" disabled><i class="ph ph-check" aria-hidden="true"></i></span> 包含归档资料</label>
       </div>
     </section>
     <section>
@@ -61,11 +62,14 @@ try {
       <div class="row" role="group" aria-label="排序方式">
         <label class="row"><input type="radio" name="sort" checked> 最近</label>
         <label class="row"><input type="radio" name="sort"> 名称</label>
+        <label class="row"><input type="radio" name="sort" disabled> 自定义</label>
       </div>
     </section>
     <section>
       <h2>开关</h2>
       <label class="switch"><input type="checkbox" role="switch"> 桌面通知</label>
+      <label class="switch"><input type="checkbox" role="switch" disabled> 邮件通知</label>
+      <label class="switch"><input type="checkbox" role="switch" checked disabled> 系统通知</label>
     </section>
     <section>
       <h2>下拉选择</h2>
@@ -76,6 +80,7 @@ try {
           <button type="button" aria-pressed="false">详细</button>
         </div>
       </details>
+      <label class="preview">内容详略<select class="field" disabled><option>简明</option></select></label>
     </section>
     <section>
       <h2>滑块</h2>
@@ -86,12 +91,13 @@ try {
       <div class="preview row">
         <label class="field-label">资料标题<input class="field" placeholder="例如：阅读笔记" aria-describedby="title-hint"></label>
         <p class="hint" id="title-hint">用于在资料列表中识别这份文档</p>
-        <input class="field" aria-label="资料来源" value="来源由系统填写" disabled>
+        <label class="field-label">资料来源<input class="field" value="来源由系统填写" disabled></label>
       </div>
     </section>
     <section>
       <h2>多行输入框</h2>
       <div class="preview"><textarea class="field" rows="3" aria-label="备注" placeholder="输入备注"></textarea></div>
+      <label class="preview">备注<textarea class="field" rows="3" disabled>已归档的阅读笔记。</textarea></label>
       <div class="size-row composer-sizes"><label class="size-example" style="--sample-size: 52px"><textarea class="field composer-sample" rows="1" placeholder="输入消息"></textarea><small>对话中 · 最小高度 52px</small></label><label class="size-example" style="--sample-size: 88px"><textarea class="field composer-sample" rows="1" placeholder="输入消息"></textarea><small>首页空态 · 最小高度 88px</small></label></div>
     </section>
     <section>

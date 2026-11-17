@@ -122,7 +122,22 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 .component-gallery header, .component-gallery main { max-width: var(--content-width); padding-inline: var(--page-inset); }
 .component-gallery .secondary { border-radius: var(--radius-button); }
 .component-gallery .field:not(textarea):not(input) { border: var(--border-width) solid var(--input-line); }
+.component-gallery .tab-switch { gap: var(--space-1); }
 .component-gallery .tab-switch::before { transition: none; border-radius: var(--radius-button); }
+.component-gallery .tab-switch [role=tab] {
+  background: transparent;
+  color: var(--secondary);
+}
+.component-gallery .tab-switch [role=tab][aria-selected=true],
+.component-gallery .tab-switch [role=tab]:not(:disabled):hover {
+  background: transparent;
+  color: var(--text);
+}
+.component-gallery .tab-switch [role=tab]:not(:disabled):active {
+  background: transparent;
+  border-color: var(--pressed-bg);
+}
+
 .component-gallery .picker summary::after { content: "\e136"; width: 12px; height: 12px; font: 12px/1 "Phosphor"; color: var(--secondary); background: none; mask: none; }
 .component-gallery .picker[open] > summary::after { transform: translateY(-50%); }
 .component-gallery .picker-options button::after { content: "\e184"; width: 18px; height: 18px; font: 18px/1 "Phosphor"; border: 0; transform: none; background: none; mask: none; }
@@ -168,12 +183,10 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 .ph-icon-sun, .star-fill { display: none; }
 .theme-dark .ph-icon-moon, #favorite[aria-pressed=true] .star-regular { display: none; }
 .theme-dark .ph-icon-sun, #favorite[aria-pressed=true] .star-fill { display: inline-block; }
-.component-gallery .secondary:hover, .component-gallery button:not(.primary):not(:disabled):hover { background: var(--hover); }
+.component-gallery .secondary:not(:disabled):hover, .component-gallery button:not(.primary):not([role=tab]):not(:disabled):hover { background: var(--hover); }
 .component-gallery button:not(:disabled):active { background: var(--pressed-bg); opacity: 1; }
 .component-gallery .primary:not(:disabled):active { background: var(--pressed-strong-bg); color: var(--on-strong); }
 .component-gallery .icon[aria-pressed=true], .component-gallery .picker-options [aria-pressed=true] { background: var(--selected); }
-.component-gallery .switch input, .component-gallery #volume { background: var(--soft-bg); }
-.component-gallery .switch input:checked { background: var(--strong); }
 .component-gallery #volume { background: linear-gradient(to right, var(--strong) var(--fill), var(--soft-bg) var(--fill)); }
 #lab-send, #study-send, #study-stop { min-width: 88px; }
 /* Explicit icon states remain above the page layout layer. */
@@ -198,3 +211,184 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
 #today .new-composer textarea { max-height: min(240px, 35dvh); }
 
 .context-button .ph-icon { font-size: 12px; }
+
+/* Native checkbox semantics with the shared Phosphor check glyph. */
+.checkbox-control {
+  position: relative;
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+}
+.checkbox-control input[type=checkbox] {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 5px;
+}
+.checkbox-control > .ph-check {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--on-strong);
+  pointer-events: none;
+  visibility: hidden;
+}
+.checkbox-control input:checked + .ph-check { visibility: visible; }
+.checkbox-control input:disabled + .ph-check { color: var(--disabled-foreground); }
+
+/* Disabled controls retain readable text and suppress interactive feedback. */
+.component-gallery label:has(input:disabled, textarea:disabled, select:disabled) {
+  color: var(--disabled-foreground);
+  cursor: not-allowed;
+}
+.component-gallery :is(button, input, textarea, select):disabled,
+.component-gallery :is(button, input, textarea, select):disabled:hover {
+  background: var(--disabled-bg);
+  color: var(--disabled-foreground);
+  border-color: var(--disabled-border);
+  cursor: not-allowed;
+  opacity: 1;
+}
+.component-gallery :is(.ghost, .icon-button):disabled,
+.component-gallery :is(.ghost, .icon-button):disabled:hover {
+  background: transparent;
+}
+/* Input surfaces remain visible even when editing is disabled. */
+.component-gallery :is(input.field, textarea, select):disabled,
+.component-gallery :is(input.field, textarea, select):disabled:hover {
+  background: var(--disabled-input-bg);
+}
+.component-gallery input:disabled::placeholder { color: var(--disabled-foreground); }
+.component-gallery textarea:disabled { resize: none; }
+.component-gallery input[type=radio]:disabled::before {
+  background: var(--disabled-foreground);
+}
+
+/* Switch geometry and states live together; the thumb never uses margins. */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--space-2);
+  min-height: var(--control-compact);
+  cursor: pointer;
+}
+.switch input[role=switch] {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  padding: 0;
+  margin: 0;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-round);
+  background: var(--soft-bg);
+  box-shadow: none;
+  cursor: inherit;
+}
+.switch input[role=switch]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--switch-thumb-inset);
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+  margin: 0;
+  border-radius: var(--radius-round);
+  background: var(--secondary);
+  transform: translateY(-50%);
+  transition: transform var(--duration-color), background-color var(--duration-color);
+}
+.switch input[role=switch]:checked { background: var(--strong); }
+.switch input[role=switch]:checked::before {
+  transform: translate(var(--switch-thumb-travel), -50%);
+  background: var(--on-strong);
+}
+.component-gallery .switch input[role=switch]:disabled,
+.component-gallery .switch input[role=switch]:disabled:hover {
+  background: var(--disabled-bg);
+  border-color: var(--disabled-border);
+}
+.component-gallery .switch input[role=switch]:checked:disabled,
+.component-gallery .switch input[role=switch]:checked:disabled:hover {
+  background: var(--switch-disabled-on-bg);
+}
+.component-gallery .switch input[role=switch]:disabled::before {
+  background: var(--disabled-foreground);
+}
+@media (pointer: coarse) {
+  .switch { min-height: var(--control-touch); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .switch input[role=switch]::before { transition: none; }
+}
+
+/* Gallery density: comfortable controls inside compact groups. */
+.component-gallery .samples button:not(.icon):not(.calendar button):not(.calendar-nav button) {
+  padding-inline: var(--space-3);
+}
+.component-gallery :is(input.field, select.field),
+.component-gallery .picker > summary.field {
+  min-height: var(--control-compact);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
+}
+.component-gallery .picker > summary.field {
+  display: flex;
+  align-items: center;
+  padding-right: var(--space-6);
+}
+.component-gallery .picker summary::after { right: var(--space-3); }
+.component-gallery label:not(.row):not(.switch) { gap: var(--space-2); }
+.component-gallery label.row {
+  gap: var(--space-2);
+  min-height: var(--control-compact);
+}
+.component-gallery textarea.field:not(.composer-sample) {
+  min-height: var(--gallery-textarea-height);
+  padding: var(--space-3) var(--space-4);
+}
+.component-gallery .tip [role=tooltip] {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+.component-gallery #notice:not(:empty) {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+}
+.component-gallery dialog { padding: var(--space-5); }
+@media (pointer: coarse) {
+  .component-gallery :is(input.field, select.field),
+  .component-gallery .picker > summary.field,
+  .component-gallery label.row { min-height: var(--control-touch); }
+}
+
+/* Gallery typography uses the same roles at every density and state. */
+.component-gallery :is(.sample-table, output, .calendar-nav strong),
+.component-gallery #menu-picker > summary,
+.component-gallery .tip [role=tooltip] {
+  font-size: var(--text-control);
+  line-height: var(--leading-standard);
+}
+.component-gallery .samples > section > h2 {
+  font: var(--weight-medium) var(--text-body)/var(--leading-standard) var(--font-sans);
+}
+.component-gallery .field,
+.component-gallery textarea,
+.component-gallery select,
+.component-gallery #detail-picker > summary,
+.component-gallery #detail-picker .picker-options button {
+  font: var(--weight-regular) var(--text-control)/var(--leading-standard) var(--font-sans);
+}
+.component-gallery [role=tabpanel],
+.component-gallery #notice {
+  font: var(--weight-regular) var(--text-control)/var(--leading-standard) var(--font-sans);
+}
+.component-gallery #menu-picker > summary {
+  font-weight: var(--weight-medium);
+}

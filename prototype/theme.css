@@ -49,7 +49,8 @@
   --pressed-bg: #dedede;
   --pressed-strong-bg: #383838;
   --disabled-foreground: #6b6b6b;
-  --disabled-bg: #f0f0f0;
+  --disabled-bg: #fafafa;
+  --disabled-input-bg: var(--gray-350);
   --disabled-border: #d9d9d9;
   --popup-bg: var(--surface);
   --border-width: 1px;
@@ -59,6 +60,13 @@
   --duration-theme: 400ms;
   --ease-popup: ease-out;
   --ease-theme: ease-in-out;
+  --switch-width: 36px;
+  --switch-height: 22px;
+  --switch-thumb-size: 14px;
+  --switch-thumb-inset: 3px;
+  --switch-thumb-travel: calc(var(--switch-width) - 2 * var(--border-width) - 2 * var(--switch-thumb-inset) - var(--switch-thumb-size));
+  --switch-disabled-on-bg: var(--gray-350);
+  --gallery-textarea-height: 96px;
   --control-compact: 36px;
   --control-touch: 44px;
   --list-single: 36px;
@@ -72,9 +80,11 @@
   --pressed-bg: #414249;
   --pressed-strong-bg: #d0cfd4;
   --disabled-foreground: #99989f;
-  --disabled-bg: #2d2e33;
+  --disabled-bg: #24252a;
+  --disabled-input-bg: var(--gray-900);
   --disabled-border: #45464e;
   --popup-bg: var(--panel);
+  --switch-disabled-on-bg: var(--gray-750);
 }
 @media (640px <= width < 1000px) { :root { --page-inset: 16px; } }
 @media (width < 640px) {
