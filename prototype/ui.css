@@ -26,9 +26,12 @@ small, .hint, .eyebrow, .footer, .message-author, .study-meta, .study-tag,
   font: var(--weight-regular) var(--text-caption)/var(--leading-standard) var(--font-sans);
 }
 button { min-height: var(--control-compact); border-radius: var(--radius-button); }
-button, a, input, textarea, select, summary, .workspace-sidebar nav a::before {
+button, a, input, textarea, select, summary, .new-composer, .workspace-sidebar nav a::before {
   transition: color var(--duration-color), background-color var(--duration-color), border-color var(--duration-color);
 }
+.workspace-sidebar nav .ph-icon { transition: color var(--duration-color); }
+.sample-table tbody tr { transition: background-color var(--duration-color); }
+input[type=radio]::before { transition: opacity var(--duration-color); }
 input:not([type=checkbox], [type=radio], [type=range], [type=file]), textarea, select, .field,
 .new-composer textarea, #today .new-composer textarea, .study-composer textarea,
 .lab-compose textarea, .knowledge-controls select, .knowledge-card select, #detail-picker > summary {
@@ -124,6 +127,21 @@ dialog, #context-menu, .picker-panel, #detail-picker > .picker-panel {
 dialog, dialog::backdrop { opacity: 0; translate: none; transition: opacity var(--duration-popup) var(--ease-popup), display var(--duration-popup) allow-discrete, overlay var(--duration-popup) allow-discrete; }
 dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 @starting-style { dialog[open], dialog[open]::backdrop { opacity: 0; translate: none; } }
+/* Gallery feedback keeps its subtle entrance while sharing popup timing. */
+@keyframes content-appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.component-gallery [role=tabpanel]:not([hidden]) {
+  animation: content-appear var(--duration-popup) var(--ease-popup) both;
+}
+.component-gallery #notice {
+  opacity: 0;
+  translate: 0 5px;
+  pointer-events: none;
+  transition: opacity var(--duration-popup) var(--ease-popup), translate var(--duration-popup) var(--ease-popup);
+}
+.component-gallery #notice.visible { opacity: 1; translate: 0 0; pointer-events: auto; }
 /* Progressive fade-out for popovers whose visibility uses hidden/details. */
 @supports (transition-behavior: allow-discrete) {
   #context-menu, .picker-panel { transition: opacity var(--duration-popup) var(--ease-popup), display var(--duration-popup) allow-discrete; }
@@ -255,11 +273,27 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
   width: 18px;
   height: 18px;
 }
+.lab-source .checkbox-control { margin-top: var(--space-1); }
 .checkbox-control input[type=checkbox] {
+  appearance: none;
+  display: grid;
+  place-items: center;
   width: 100%;
   height: 100%;
   margin: 0;
+  border: var(--border-width) solid var(--focus);
   border-radius: 5px;
+  background: var(--input);
+  cursor: pointer;
+}
+.checkbox-control input:checked {
+  background: var(--strong);
+  border-color: var(--strong);
+}
+.checkbox-control input:disabled {
+  background: var(--disabled-bg);
+  border-color: var(--disabled-border);
+  cursor: default;
 }
 .checkbox-control > .ph-check {
   position: absolute;
@@ -293,8 +327,9 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
   background: transparent;
 }
 /* Input surfaces remain visible even when editing is disabled. */
-.component-gallery :is(input.field, textarea, select):disabled,
-.component-gallery :is(input.field, textarea, select):disabled:hover {
+:is(input:not([type=checkbox], [type=radio], [type=range], [type=file], [type=button], [type=submit], [type=reset], [type=color], [type=hidden]), textarea, select):disabled,
+:is(input:not([type=checkbox], [type=radio], [type=range], [type=file], [type=button], [type=submit], [type=reset], [type=color], [type=hidden]), textarea, select):disabled:hover,
+#today .new-composer textarea:disabled {
   background: var(--disabled-input-bg);
 }
 .component-gallery input:disabled::placeholder { color: var(--disabled-foreground); }

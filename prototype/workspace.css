@@ -34,13 +34,12 @@ main{position:relative}.topbar{height:var(--header-height)}.breadcrumb b{font-si
 /* Phosphor icons share one family across regular and filled states. */
 .ph-icon{display:inline-block;width:18px;height:18px;flex-shrink:0;fill:currentColor}.context-button .ph-icon{width:12px;height:12px}.ph-icon-fill,.ph-icon-sun{display:none}.workspace-sidebar nav a.active .ph-icon-regular{display:none}.workspace-sidebar nav a.active .ph-icon-fill{display:inline-block}.theme-dark .ph-icon-moon{display:none}.theme-dark .ph-icon-sun{display:inline-block}
 /* Equal 20px layout slots; scale artwork to compensate for SVG internal whitespace. */
-.workspace-sidebar nav .ph-icon{--nav-icon-scale:1;width:20px;height:20px;transform:scale(var(--nav-icon-scale));transform-origin:center;transition:color .16s,transform .16s}
+.workspace-sidebar nav .ph-icon{--nav-icon-scale:1;width:20px;height:20px;transform:scale(var(--nav-icon-scale));transform-origin:center}
 .workspace-sidebar nav a[data-page="projects"] .ph-icon{--nav-icon-scale:1.18}
 .workspace-sidebar nav a[data-page="memory"] .ph-icon-regular{--nav-icon-scale:.9}
 .workspace-sidebar nav a[data-page="memory"] .ph-icon-fill{--nav-icon-scale:.95}
 .workspace-sidebar nav a:hover .ph-icon{transform:scale(var(--nav-icon-scale))}
 .workspace-sidebar nav a.active .ph-icon{transform:scale(var(--nav-icon-scale))}
-.sidebar-compact .workspace-sidebar nav a:before{transition:background .16s,box-shadow .16s}
 .sidebar-compact .workspace-sidebar nav a.active:before{background:#e0e3ec;box-shadow:inset 0 0 0 1px #d6dae650}
 .source-link{color:#92939f}
 @media(prefers-reduced-motion:reduce){.workspace-sidebar nav a:hover .ph-icon{transform:scale(var(--nav-icon-scale))}}

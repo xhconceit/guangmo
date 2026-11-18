@@ -47,7 +47,6 @@ main:has(#today.active) .topbar {
   border-radius: var(--radius-composer);
   background: var(--input);
   box-shadow: var(--frame-shadow);
-  transition: border-color .18s ease, background-color .18s ease;
 }
 
 #today .new-composer:focus-within {

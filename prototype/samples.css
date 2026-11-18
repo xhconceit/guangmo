@@ -151,7 +151,7 @@ dialog p { margin: var(--space-2) 0 var(--space-3); color: var(--secondary); fon
 button, .field {
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 140ms ease;
 }
-input[type=checkbox]:not([role=switch]), input[type=radio] {
+input[type=radio] {
   appearance: none;
   display: grid;
   place-items: center;
@@ -162,10 +162,9 @@ input[type=checkbox]:not([role=switch]), input[type=radio] {
   border-radius: 7px;
   background: var(--input);
   cursor: pointer;
-  transition: background-color 160ms ease, border-color 160ms ease;
 }
 input[type=radio] { border-radius: 50%; }
-input:is([type=checkbox]:not([role=switch]), [type=radio]):checked {
+input[type=radio]:checked {
   background: var(--strong);
   border-color: var(--strong);
 }
@@ -177,7 +176,6 @@ input[type=radio]::before {
   border-width: 0 0 2px 2px;
   transform: rotate(-45deg);
   opacity: 0;
-  transition: opacity 160ms ease;
 }
 input[type=radio]::before {
   width: 7px;
@@ -187,7 +185,7 @@ input[type=radio]::before {
   border-radius: 50%;
   background: var(--on-strong);
 }
-input:is([type=checkbox]:not([role=switch]), [type=radio]):checked::before {
+input[type=radio]:checked::before {
   opacity: 1;
 }
 input:disabled { opacity: .55; cursor: default; }
@@ -261,14 +259,6 @@ details.picker[open] { z-index: 4; }
 .picker-options [aria-pressed=true] { background: var(--panel); }
 .picker-options button::after { content: ''; width: 10px; height: 6px; border: solid currentColor; border-width: 0 0 1.5px 1.5px; transform: rotate(-45deg); opacity: 0; }
 .picker-options [aria-pressed=true]::after { opacity: 1; }
-@keyframes appear {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-[role=tabpanel]:not([hidden]),
-.tip:hover [role=tooltip], .tip:focus-within [role=tooltip] {
-  animation: appear 180ms ease-out both;
-}
 dialog, dialog::backdrop {
   opacity: 0;
   transition: opacity 180ms ease, display 180ms allow-discrete,
@@ -291,8 +281,6 @@ dialog[open] { translate: 0 0; }
 }
 .picker.opens-up { --picker-enter-y: 3px; }
 .picker[open] > .picker-panel { animation: picker-enter 140ms ease-out; }
-#notice { opacity: 0; translate: 0 5px; pointer-events: none; transition: opacity 180ms ease, translate 180ms ease; }
-#notice.visible { opacity: 1; translate: 0 0; pointer-events: auto; }
 .sample-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: var(--text-control); }
 .sample-table th, .sample-table td {
   padding: var(--space-2) var(--space-3);
@@ -302,7 +290,6 @@ dialog[open] { translate: 0 0; }
 }
 .sample-table tbody tr:last-child td { border-bottom: 0; }
 .sample-table th { background: var(--panel); color: var(--secondary); font-weight: 600; }
-.sample-table tbody tr { transition: background-color 160ms ease; }
 .sample-table tbody tr:hover { background: var(--panel); }
 .sample-table.compact { font-size: var(--text-control); }
 .sample-table.compact :is(th, td) { padding: var(--space-1) var(--space-3); }
@@ -322,7 +309,7 @@ dialog[open] { translate: 0 0; }
 button:not(:disabled):active { opacity: .75; }
 @supports (corner-shape: squircle) {
   .sample-table, dialog,
-  #notice, .tip [role=tooltip], input[type=checkbox]:not([role=switch]) {
+  #notice, .tip [role=tooltip] {
     corner-shape: squircle;
   }
 }
