@@ -89,12 +89,31 @@ button:disabled, .field:disabled, .send:disabled, input:disabled, textarea:disab
 #today .prompt-options button { border: 0; background: transparent; padding: var(--space-2) var(--space-3); font-size: var(--text-control); }
 #today .prompt-options button:hover { background: var(--hover); }
 #today .prompt-options { gap: var(--space-2); margin-top: var(--space-4); }
-.study-tabs, .lab-switch, .tab-switch { background: var(--hover); border-radius: var(--radius-md); }
-.study-tabs button[aria-pressed=true], .lab-switch button[aria-pressed=true], .tab-switch::before {
-  background: var(--surface); box-shadow: var(--frame-shadow);
-}
-.study-tabs button[aria-pressed=true], .lab-switch button[aria-pressed=true] { color: var(--text); }
 .study-button[aria-pressed=true] { background: var(--selected); color: var(--text); }
+.study-tabs, .lab-switch, .tab-switch { background: var(--hover); border-radius: var(--radius-md); }
+:is(.study-tabs, .lab-switch) > button { position: relative; }
+:is(.study-tabs, .lab-switch) > button:not(:disabled):is(:hover, :active) {
+  background: transparent;
+  color: var(--text);
+}
+:is(.study-tabs, .lab-switch) > button[aria-pressed=true]:not(:disabled), .tab-switch::before {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--frame-shadow);
+}
+/* An inner border preserves tab dimensions and the separate keyboard focus ring. */
+:is(.study-tabs, .lab-switch) > button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--border-width) solid transparent;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color var(--duration-color);
+}
+:is(.study-tabs, .lab-switch) > button:not(:disabled):active::after {
+  border-color: var(--pressed-bg);
+}
 dialog, #context-menu, .picker-panel, #detail-picker > .picker-panel {
   background: var(--popup-bg); color: var(--text); border-radius: var(--radius-md); box-shadow: var(--popup-shadow);
 }
@@ -187,6 +206,22 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 .component-gallery button:not(:disabled):active { background: var(--pressed-bg); opacity: 1; }
 .component-gallery .primary:not(:disabled):active { background: var(--pressed-strong-bg); color: var(--on-strong); }
 .component-gallery .icon[aria-pressed=true], .component-gallery .picker-options [aria-pressed=true] { background: var(--selected); }
+/* Keep the selected date's foreground paired with its background in every state. */
+.component-gallery .calendar button[aria-pressed=true]:not(:disabled),
+.component-gallery .calendar button[aria-pressed=true]:not(:disabled):hover {
+  background: var(--strong);
+  color: var(--on-strong);
+}
+.component-gallery .calendar button[aria-pressed]:not(:disabled):active,
+.component-gallery .calendar-nav button:not(:disabled):active,
+.component-gallery .calendar-nav button:not(:disabled):hover:active {
+  background: var(--pressed-bg);
+  color: var(--text);
+}
+.component-gallery .calendar button[aria-pressed=true]:not(:disabled):active {
+  background: var(--pressed-strong-bg);
+  color: var(--on-strong);
+}
 .component-gallery #volume { background: linear-gradient(to right, var(--strong) var(--fill), var(--soft-bg) var(--fill)); }
 #lab-send, #study-send, #study-stop { min-width: 88px; }
 /* Explicit icon states remain above the page layout layer. */
