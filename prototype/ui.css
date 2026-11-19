@@ -13,7 +13,7 @@ p, .chat-result, .study-paper p, .study-message, .lab-message, .lab-output, .lab
 button, summary, label, .history-items button, .history-new-chat, .study-button,
 .study-tabs button, .lab-switch button, .lab-source button, .lab-prompts button,
 .lab-tile, .lab-artifact, .lab-answer, .study-passage button, .picker-options button,
-#detail-picker .picker-options button, #menu-picker li button, .calendar button,
+#detail-picker .picker-options button, .calendar button,
 #study-welcome .study-tools button, .study-message button, .knowledge-actions button,
 .study-composer .primary, .study-selection .study-button {
   font: var(--weight-medium) var(--text-control)/var(--leading-standard) var(--font-sans);
@@ -84,7 +84,7 @@ button:disabled, .field:disabled, .send:disabled, input:disabled, textarea:disab
 .sidebar-compact .workspace-sidebar nav a::before { border-radius: var(--radius-nav); }
 #theme-toggle { width: var(--control-touch); height: var(--control-touch); flex-shrink: 0; }
 .icon-button, .attach-button, .history-header .history-close { width: var(--control-compact); height: var(--control-compact); }
-.history-items button, .history-new-chat, .picker-options button, #menu-picker li button, .study-outline button {
+.history-items button, .history-new-chat, .picker-options button, .study-outline button {
   min-height: var(--list-single); padding: var(--space-2) var(--space-3); white-space: normal; overflow-wrap: anywhere;
 }
 .history-label { padding-inline: var(--space-3); }
@@ -158,10 +158,50 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 }
 .component-gallery header, .component-gallery main { max-width: var(--content-width); padding-inline: var(--page-inset); }
 .component-gallery .secondary { border-radius: var(--radius-button); }
+.component-gallery progress {
+  height: var(--gallery-progress-height);
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-round);
+  overflow: hidden;
+  background: var(--input);
+  box-shadow: none;
+}
+.component-gallery progress::-webkit-progress-bar {
+  border: 0;
+  border-radius: var(--radius-round);
+  background: var(--input);
+  box-shadow: none;
+}
+.component-gallery progress::-webkit-progress-value {
+  border: 0;
+  border-radius: var(--radius-round);
+  background: var(--strong);
+  box-shadow: none;
+}
+.component-gallery progress::-moz-progress-bar {
+  border: 0;
+  border-radius: var(--radius-round);
+  background: var(--strong);
+  box-shadow: none;
+}
+@supports (corner-shape: squircle) {
+  .component-gallery progress { corner-shape: round; }
+  .component-gallery progress::-webkit-progress-bar { corner-shape: round; }
+  .component-gallery progress::-webkit-progress-value { corner-shape: round; }
+  .component-gallery progress::-moz-progress-bar { corner-shape: round; }
+}
 .component-gallery .field:not(textarea):not(input) { border: var(--border-width) solid var(--input-line); }
 .component-gallery .tab-switch { gap: var(--space-1); }
-.component-gallery .tab-switch::before { transition: none; border-radius: var(--radius-button); }
+.component-gallery .tab-switch::before {
+  transition: transform var(--duration-popup) var(--ease-popup), width var(--duration-popup) var(--ease-popup), height var(--duration-popup) var(--ease-popup);
+  border-radius: var(--radius-button);
+}
 .component-gallery .tab-switch [role=tab] {
+  min-height: var(--gallery-tab-height);
+  padding-block: calc(var(--space-1) / 2);
+  border: 0;
   background: transparent;
   color: var(--secondary);
 }
@@ -172,7 +212,7 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
 }
 .component-gallery .tab-switch [role=tab]:not(:disabled):active {
   background: transparent;
-  border-color: var(--pressed-bg);
+  color: var(--text);
 }
 
 .component-gallery .picker summary::after { content: "\e136"; width: 12px; height: 12px; font: 12px/1 "Phosphor"; color: var(--secondary); background: none; mask: none; }
@@ -240,7 +280,66 @@ dialog[open], dialog[open]::backdrop { opacity: 1; translate: none; }
   background: var(--pressed-strong-bg);
   color: var(--on-strong);
 }
-.component-gallery #volume { background: linear-gradient(to right, var(--strong) var(--fill), var(--soft-bg) var(--fill)); }
+.component-gallery #volume {
+  -webkit-appearance: none;
+  appearance: none;
+  height: var(--control-compact);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-round);
+  background: transparent;
+  cursor: pointer;
+}
+.component-gallery #volume::-webkit-slider-runnable-track {
+  height: var(--slider-track-height);
+  border: 0;
+  border-radius: var(--radius-round);
+  background: linear-gradient(to right, var(--strong) var(--fill), var(--input) var(--fill));
+}
+.component-gallery #volume::-moz-range-track {
+  height: var(--slider-track-height);
+  border: 0;
+  border-radius: var(--radius-round);
+  background: linear-gradient(to right, var(--strong) var(--fill), var(--input) var(--fill));
+}
+.component-gallery #volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2);
+  border: calc(2 * var(--border-width)) solid var(--surface);
+  border-radius: var(--radius-round);
+  background: var(--strong);
+  box-shadow: var(--frame-shadow);
+}
+.component-gallery #volume::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border: calc(2 * var(--border-width)) solid var(--surface);
+  border-radius: var(--radius-round);
+  background: var(--strong);
+  box-shadow: var(--frame-shadow);
+}
+@supports (corner-shape: squircle) {
+  .component-gallery #volume { corner-shape: round; }
+  .component-gallery #volume::-webkit-slider-runnable-track { corner-shape: round; }
+  .component-gallery #volume::-moz-range-track { corner-shape: round; }
+  .component-gallery #volume::-webkit-slider-thumb { corner-shape: round; }
+  .component-gallery #volume::-moz-range-thumb { corner-shape: round; }
+}
+@media (pointer: coarse) {
+  .component-gallery #volume { height: var(--control-touch); }
+}
+.component-gallery #volume-value {
+  min-width: 4ch;
+  font-size: var(--text-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--secondary);
+}
 #lab-send, #study-send, #study-stop { min-width: 88px; }
 /* Explicit icon states remain above the page layout layer. */
 .ph-icon-fill { display: none; }
@@ -414,6 +513,13 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
   padding-right: var(--space-6);
 }
 .component-gallery .picker summary::after { right: var(--space-3); }
+.component-gallery .select-preview > :is(summary.field, select.field) {
+  min-height: var(--gallery-select-height);
+}
+.component-gallery #detail-picker .picker-options button {
+  min-height: var(--gallery-select-option-height);
+  padding-block: calc(var(--space-1) / 2);
+}
 .component-gallery label:not(.row):not(.switch) { gap: var(--space-2); }
 .component-gallery label.row {
   gap: var(--space-2);
@@ -432,7 +538,35 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
   border-radius: var(--radius-md);
 }
 .component-gallery dialog { padding: var(--space-5); }
+.component-gallery dialog::backdrop { background: var(--dialog-backdrop-bg); }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .component-gallery dialog {
+    background: var(--dialog-glass-bg);
+    -webkit-backdrop-filter: blur(var(--dialog-glass-blur));
+    backdrop-filter: blur(var(--dialog-glass-blur));
+  }
+  .component-gallery dialog::backdrop {
+    -webkit-backdrop-filter: blur(var(--dialog-backdrop-blur));
+    backdrop-filter: blur(var(--dialog-backdrop-blur));
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .component-gallery dialog {
+    background: var(--popup-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .component-gallery dialog::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
 @media (pointer: coarse) {
+  .component-gallery .tab-switch { --gallery-tab-height: var(--control-touch); }
+  .component-gallery .select-preview {
+    --gallery-select-height: var(--control-touch);
+    --gallery-select-option-height: var(--control-touch);
+  }
   .component-gallery :is(input.field, select.field),
   .component-gallery .picker > summary.field,
   .component-gallery label.row { min-height: var(--control-touch); }
@@ -440,7 +574,6 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
 
 /* Gallery typography uses the same roles at every density and state. */
 .component-gallery :is(.sample-table, output, .calendar-nav strong),
-.component-gallery #menu-picker > summary,
 .component-gallery .tip [role=tooltip] {
   font-size: var(--text-control);
   line-height: var(--leading-standard);
@@ -458,7 +591,4 @@ blockquote, .study-message blockquote, .study-selection, .knowledge-card blockqu
 .component-gallery [role=tabpanel],
 .component-gallery #notice {
   font: var(--weight-regular) var(--text-control)/var(--leading-standard) var(--font-sans);
-}
-.component-gallery #menu-picker > summary {
-  font-weight: var(--weight-medium);
 }

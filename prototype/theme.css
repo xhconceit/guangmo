@@ -53,6 +53,10 @@
   --disabled-input-bg: var(--gray-350);
   --disabled-border: #d9d9d9;
   --popup-bg: var(--surface);
+  --dialog-glass-bg: color-mix(in srgb, var(--popup-bg) 20%, transparent);
+  --dialog-glass-blur: 5px;
+  --dialog-backdrop-bg: color-mix(in srgb, var(--outer) 20%, transparent);
+  --dialog-backdrop-blur: 2px;
   --border-width: 1px;
   --focus-width: 2px;
   --duration-color: 150ms;
@@ -67,6 +71,13 @@
   --switch-thumb-travel: calc(var(--switch-width) - 2 * var(--border-width) - 2 * var(--switch-thumb-inset) - var(--switch-thumb-size));
   --switch-disabled-on-bg: var(--gray-350);
   --gallery-textarea-height: 96px;
+  --gallery-select-width: 120px;
+  --gallery-select-height: 32px;
+  --gallery-select-option-height: 28px;
+  --gallery-tab-height: 28px;
+  --gallery-progress-height: 6px;
+  --slider-track-height: 6px;
+  --slider-thumb-size: 16px;
   --control-compact: 36px;
   --control-touch: 44px;
   --list-single: 36px;

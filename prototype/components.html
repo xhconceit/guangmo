@@ -73,14 +73,14 @@ try {
     </section>
     <section>
       <h2>下拉选择</h2>
-      <details class="picker" id="detail-picker">
+      <details class="picker select-preview" id="detail-picker">
         <summary class="field" aria-label="内容详略：简明">简明</summary>
         <div class="picker-panel picker-options">
           <button type="button" aria-pressed="true">简明</button>
           <button type="button" aria-pressed="false">详细</button>
         </div>
       </details>
-      <label class="preview">内容详略<select class="field" disabled><option>简明</option></select></label>
+      <label class="preview select-preview">内容详略<select class="field" disabled><option>简明</option></select></label>
     </section>
     <section>
       <h2>滑块</h2>
@@ -128,18 +128,6 @@ try {
       <div id="notes" role="tabpanel" aria-labelledby="notes-tab" tabindex="0" hidden>暂无笔记</div>
     </section>
     <section>
-      <h2>菜单</h2>
-      <details class="picker" id="menu-picker">
-        <summary class="field">更多操作</summary>
-        <div class="picker-panel">
-          <ul>
-          <li><button type="button" data-message="已选择重命名">重命名</button></li>
-          <li><button type="button" data-message="已选择归档">归档</button></li>
-          </ul>
-        </div>
-      </details>
-    </section>
-    <section>
       <h2>工具提示</h2>
       <span class="tip"><button type="button" class="icon" aria-label="帮助" aria-describedby="help-tip"><i aria-hidden="true" class="ph-icon ph ph-question"></i></button><span role="tooltip" id="help-tip">只有你能看到这份资料</span></span>
     </section>
@@ -180,7 +168,7 @@ try {
     </section>
     <section>
       <h2>进度条</h2>
-      <div class="row"><progress aria-label="学习进度" max="100" value="65"></progress><span>65%</span></div>
+      <div class="row"><progress aria-label="学习进度" max="100" value="65"></progress><small>65%</small></div>
     </section>
   </div>
 </main>
@@ -254,14 +242,6 @@ for (const tab of tabs) {
   };
 }
 
-for (const item of document.querySelectorAll('[data-message]')) {
-  item.onclick = () => {
-    const picker = item.closest('details');
-    picker.open = false;
-    picker.querySelector('summary').focus();
-    showNotice(item.dataset.message);
-  };
-}
 const notice = document.querySelector('#notice');
 let noticeTimer;
 function showNotice(message) {
