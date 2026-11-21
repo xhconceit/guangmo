@@ -17,10 +17,14 @@
   --color-on-strong: var(--on-strong);
   --color-outer: var(--outer);
 
+  --color-line: var(--line);
+
   --spacing-panel-gap: var(--panel-gap);
   --spacing-page-inset: var(--page-inset);
   --spacing-frame-gap: var(--frame-gap);
   --spacing-header: var(--header-height);
+  --spacing-example-gap: var(--space-3);
+  --spacing-group-inset: var(--space-5);
 
   --radius-control: var(--radius-button);
   --radius-panel: 20px; /* 侧栏、会话列表和主区的面板圆角 */
@@ -33,6 +37,16 @@
   --breakpoint-2xl: 96rem; /* 1536px */
 
   --container-conversation: var(--conversation-width);
+  --container-content: var(--content-width);
+
+  --text-page-heading: var(--text-page-title);
+  --text-page-heading--line-height: var(--leading-title);
+  --text-page-heading--font-weight: var(--weight-semibold);
+  --text-page-heading-mobile: var(--text-page-title-mobile);
+
+  --text-gallery-category: var(--text-body);
+  --text-gallery-category--line-height: var(--leading-standard);
+  --text-gallery-category--font-weight: var(--weight-medium);
 }
 
 @utility grid-cols-workspace {

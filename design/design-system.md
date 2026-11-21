@@ -259,7 +259,7 @@ Logo 与品牌颜色见[品牌说明](README.md)，保持轮廓和比例，不�
 ## 10. 样式实现约定
 
 - `tokens.css` 管基础值，`globals.css` 映射 Tailwind 工具类并负责重置、字体和底色；[基础组件](../apps/web/src/components/ui)管理外观、尺寸和状态，业务页负责布局组合。
-- 优先复用用途相同的变量和工具类。多个使用位置需要联动调整，或某个设计角色需要按主题、状态独立调整时，可新增变量。单个组件的局部尺寸与样式留在组件内。已确认的独立角色即使当前值相同，也各自保留变量。
+- 开发或修改 Web UI 时，使用共用设计值前，先查 `token.css` 中的变量、`globals.css` 中的 `@theme inline` ，以及现有基础组件的用法。已有同用途的 Tailwind 工具类时直接复用。已有设计变量且需要公共工具类时，先在 `globals.css` 补齐映射，再在组件或页面中使用改工具类。
 - 间距映射按用途和实际数值核对，不按数字名机械替换。
 - 连续曲率用 `--corner-shape`、`corner-shape: squircle`，在 `@supports` 内覆盖元素及伪元素；不支持时回退普通圆角。正式圆形／胶囊标记 `data-corner="round"`，此为 Web 近似。[参考](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/corner-shape)
 - Web 图标只从 `@/components/ui/Icon` 导入，仅 `Icon.tsx` 直引 Phosphor，由 ESLint 限制。校准统一用 `calibrateIcon`：`CirclesFourIcon` 1.18；`BrainIcon` regular 0.9、fill 0.95；其他不缩放。调用方控制尺寸与字重，按钮／链接控制状态；不同尺寸与字重须检查效果。[SVG 与许可证](icons/phosphor/)
